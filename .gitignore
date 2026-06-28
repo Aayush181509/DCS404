@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+site
+.env
+.DS*_Store
+*.log
+*.tmp
+*.bak
+*.swp
+.vscode

@@ -1,0 +1,38 @@
+site_name: DCS 404
+site_description: Artificial Intelligence and Machine Learning
+
+nav:
+  - Getting Started: index.md
+
+theme:
+  # name: material
+  name: readthedocs
+  features:
+    - header.autohide
+    - announce.dismiss
+    - navigation.footer
+  code:
+    highlighting: true
+    light: default
+    dark: material
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+extra:
+  generator: false
+
+copyright: Copyright &copy; 2026 - Aayush Raj Regmi

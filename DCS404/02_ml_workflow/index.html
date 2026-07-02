@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>The Machine Learning Workflow - DCS 404</title>
+    <title>ML Workflow - DCS 404</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "The Machine Learning Workflow";
+        var mkdocs_page_name = "ML Workflow";
         var mkdocs_page_input_path = "DCS404/02_ml_workflow.md";
         var mkdocs_page_url = null;
       </script>
@@ -49,8 +49,72 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Machine Learning and AI</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../01_introduction_to_machine_learning/">Introduction to Machine Learning</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">ML Workflow</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-work-through-this">How to work through this</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#learning-objectives">Learning objectives</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1-the-map-crisp-dm">1. The map: CRISP-DM</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-phase-1-business-understanding">2. Phase 1 — Business Understanding</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-phase-2-data-understanding">3. Phase 2 — Data Understanding</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#31-where-data-comes-from">3.1 Where data comes from</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#32-the-dataset-student-performance">3.2 The dataset: student performance</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#33-a-quick-summary">3.3 A quick summary</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#34-descriptive-statistics">3.4 Descriptive statistics</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#35-distributions-histograms">3.5 Distributions: histograms</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#36-relationships-the-correlation-matrix">3.6 Relationships: the correlation matrix</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#37-the-categorical-features">3.7 The categorical features</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#38-data-quality-checks">3.8 Data quality checks</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-phase-3-data-preparation">4. Phase 3 — Data Preparation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#41-cleaning-the-data">4.1 Cleaning the data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#42-encoding-the-text-columns">4.2 Encoding the text columns</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#43-splitting-into-training-and-test-sets">4.3 Splitting into training and test sets</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-phase-4-modelling">5. Phase 4 — Modelling</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-phase-5-evaluation">6. Phase 5 — Evaluation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-phase-6-deployment">7. Phase 6 — Deployment</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-putting-it-all-together">8. Putting it all together</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9-your-turn">9. Your turn</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#10-if-you-remember-nothing-else">10. If you remember nothing else</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#11-further-reading-and-glossary">11. Further reading and glossary</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#further-reading">Further reading</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#glossary">Glossary</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -67,7 +131,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">The Machine Learning Workflow</li>
+          <li class="breadcrumb-item">Machine Learning and AI</li>
+      <li class="breadcrumb-item active">ML Workflow</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -1618,6 +1683,9 @@ regression and finally see, gear by gear, how it learns.</p>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../01_introduction_to_machine_learning/" class="btn btn-neutral float-left" title="Introduction to Machine Learning"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
 
   <hr/>
 
@@ -1639,6 +1707,8 @@ regression and finally see, gear by gear, how it learns.</p>
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
     
+    
+      <span><a href="../01_introduction_to_machine_learning/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>

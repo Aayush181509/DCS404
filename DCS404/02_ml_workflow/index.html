@@ -207,7 +207,7 @@ all the way through. If an import fails, install it with <code>pip install &lt;p
 <span class="c1"># from the repo root or from inside the notebooks/ folder.</span>
 <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/student-mat.csv&quot;</span><span class="p">),</span>
                   <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;notebooks/data/student-mat.csv&quot;</span><span class="p">),</span>
-                  <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;02_ml_workflow_files/dataset/student-mat.csv&quot;</span><span class="p">)]:</span>
+                  <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;resources/dataset/student-mat.csv&quot;</span><span class="p">)]:</span>
     <span class="k">if</span> <span class="n">candidate</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded dataset from: </span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -425,7 +425,7 @@ your data wasn't good enough, and circle right back to preparation — or even b
 That's not failure; that's the process working as intended. Let me draw it.</p>
 <center>
 
-<img src ="02_ml_workflow_files/images/crispdm.png" width = "900" height ="700">
+<img src ="../assets/crispdm.png" width = "900" height ="700">
 
 
 Fig: CRISP-DM Process flow 
@@ -519,7 +519,7 @@ is the right place to learn the workflow.</p>
 <p>Data needs to be there to start any data science project or data analysis project. The diagram below represents the common methods of gathering or collecting data.</p>
 <center>
 
-<img src ="02_ml_workflow_files/images/datacollection.png" width = "650" height ="450">
+<img src ="../assets/datacollection.png" width = "650" height ="450">
 
 Fig: Different ways of Data collection.
 </center>
@@ -1613,7 +1613,7 @@ walk right back to Business Understanding and Data Preparation and try again wit
 features. That circling back isn't a detour; it <em>is</em> data science. You rarely get it perfect on the first
 lap.</p>
 <center>
-<img src = "02_ml_workflow_files/images/crispdminfographics.png" width="900" height="700">
+<img src = "assets/crispdminfographics.png" width="900" height="700">
 
 Fig: CRISP-DM Infographics
 </center>

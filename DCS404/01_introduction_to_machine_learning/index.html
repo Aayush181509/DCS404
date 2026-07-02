@@ -1014,38 +1014,42 @@ winner, you've done your first real model comparison — a skill we build into a
 So here are some exercises. They start gentle and get more open-ended toward the end; work through them in
 order and add your own cells underneath each. Don't worry about getting them perfect — the point is to poke at
 the ideas until they feel like yours.</p>
-<p><strong>Exercise 1 — Classify the scenario (no code).</strong>
-For each task, name the type (supervised, unsupervised, or reinforcement) and, if supervised, whether it is
-classification or regression:
-1. Predicting tomorrow's temperature from today's weather.
-2. Grouping a store's customers into types for marketing, with no predefined groups.
-3. Teaching a drone to fly through a hoop, rewarding successful passes.
-4. Detecting whether a transaction is fraudulent from 50,000 labelled past transactions.
-5. Recommending a movie by finding users with similar taste.</p>
-<p><strong>Exercise 2 — Change the rule.</strong>
-Return to the Celsius-to-Fahrenheit demonstration (Section 3). Replace the data with values that follow the
+<p><strong>Exercise 1 — Classify the scenario (no code).</strong></p>
+<p>For each task, name the type (supervised, unsupervised, or reinforcement) and, if supervised, whether it is
+classification or regression:</p>
+<ol>
+<li>Predicting tomorrow's temperature from today's weather.</li>
+<li>Grouping a store's customers into types for marketing, with no predefined groups.</li>
+<li>Teaching a drone to fly through a hoop, rewarding successful passes.</li>
+<li>Detecting whether a transaction is fraudulent from 50,000 labelled past transactions.</li>
+<li>Recommending a movie by finding users with similar taste.</li>
+</ol>
+<p><strong>Exercise 2 — Change the rule.</strong></p>
+<p>Return to the Celsius-to-Fahrenheit demonstration (Section 3). Replace the data with values that follow the
 rule <span class="arithmatex">\(F = 2C + 10\)</span> (invent about six points). Re-fit the model. Does it recover a slope of 2 and an intercept
 of 10?</p>
-<p><strong>Exercise 3 — Regression rather than classification.</strong>
-Generate <code>X = np.linspace(0, 10, 50)</code> and <code>y = 3*X + 7 + noise</code>, fit a <code>LinearRegression</code>, and plot the data
+<p><strong>Exercise 3 — Regression rather than classification.</strong></p>
+<p>Generate <code>X = np.linspace(0, 10, 50)</code> and <code>y = 3*X + 7 + noise</code>, fit a <code>LinearRegression</code>, and plot the data
 with the fitted line. Print the learned slope and intercept and compare them to 3 and 7.</p>
-<p><strong>Exercise 4 — How many clusters?</strong>
-In the KMeans demonstration (Section 5.2), change <code>n_clusters</code> to 2, then 4, then 5, re-plotting each time.
+<p><strong>Exercise 4 — How many clusters?</strong></p>
+<p>In the KMeans demonstration (Section 5.2), change <code>n_clusters</code> to 2, then 4, then 5, re-plotting each time.
 Which looks the most natural for three-blob data? Write one sentence on why choosing the number of clusters is
 difficult.</p>
-<p><strong>Exercise 5 — Explore vs. exploit.</strong>
-In the bandit simulation (Section 5.3), try <code>epsilon</code> values of 0.0, 0.01, 0.1, and 0.5. Plot the final
+<p><strong>Exercise 5 — Explore vs. exploit.</strong></p>
+<p>In the bandit simulation (Section 5.3), try <code>epsilon</code> values of 0.0, 0.01, 0.1, and 0.5. Plot the final
 average reward for each. Which explores too little, which too much, and where is the balance?</p>
-<p><strong>Exercise 6 — Model comparison (challenge).</strong>
-On the Iris example, train <code>LogisticRegression</code>, <code>KNeighborsClassifier</code>, and <code>DecisionTreeClassifier</code>. Print
+<p><strong>Exercise 6 — Model comparison (challenge).</strong></p>
+<p>On the Iris example, train <code>LogisticRegression</code>, <code>KNeighborsClassifier</code>, and <code>DecisionTreeClassifier</code>. Print
 each one's test accuracy in a small table. For each, note whether it is model-based or instance-based, and
 parametric or non-parametric (Section 6).</p>
-<p><strong>Reflection questions.</strong>
-- The word "learning" describes both a child learning to walk and a model minimising mean squared error. In
-  what way is the machine's learning different from a person's?
-- Machine learning models can find patterns beyond human comprehension. Why is that both an advantage and a
-  risk?
-- Give one example where you would deliberately choose a less accurate but more interpretable model.</p>
+<p><strong>Reflection questions.</strong></p>
+<ul>
+<li>The word "learning" describes both a child learning to walk and a model minimising mean squared error. In
+  what way is the machine's learning different from a person's?</li>
+<li>Machine learning models can find patterns beyond human comprehension. Why is that both an advantage and a
+  risk?</li>
+<li>Give one example where you would deliberately choose a less accurate but more interpretable model.</li>
+</ul>
 <hr />
 <h2 id="10-where-we-go-from-here">10. Where we go from here</h2>
 <p>You're standing at Module 1, and I know the road ahead can look like a long list of intimidating algorithm

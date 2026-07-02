@@ -2,17 +2,14 @@
 # Use bash for shell commands
 SHELL := /bin/bash
 # Default variables
-# INPUT_DIR  := notebooks
-# INPUT_DIR  := agentic/RAG/Finance/notebooks
-INPUT_DIR  := session
+INPUT_DIR  := notebooks
 
 
-NOTEBOOK ?= notebooks/00a_numpy_basics.ipynb
+NOTEBOOK ?= notebooks/02_ml_workflow.ipynb
 # Default output directory for converted notebooks
 # If OUTPUT is not set, it defaults to docs/lectures/
-OUTPUT   ?= docs/ican/
-OUTPUT_DIR := docs/ican/Agentic/
-OUTPUT_DIR := docs/session/
+OUTPUT   ?= docs/DCS404/
+OUTPUT_DIR := docs/DCS404
 
 NOTEBOOKS  := $(wildcard $(INPUT_DIR)/*.ipynb)
 

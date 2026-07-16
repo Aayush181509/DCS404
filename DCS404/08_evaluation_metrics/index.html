@@ -72,6 +72,68 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#part-a-regression-metrics">Part A — Regression metrics</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-the-raw-material-residuals">1. The raw material: residuals</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-mae-mean-absolute-error">2. MAE — Mean Absolute Error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-mse-mean-squared-error">3. MSE — Mean Squared Error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-rmse-root-mean-squared-error">4. RMSE — Root Mean Squared Error</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#stress-test-one-bad-data-point">Stress test: one bad data point</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-r2-skill-relative-to-a-baseline">5. R² — skill, relative to a baseline</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#6-adjusted-r2-charging-rent-for-features">6. Adjusted R² — charging rent for features</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#7-mape-mean-absolute-percentage-error">7. MAPE — Mean Absolute Percentage Error</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#the-regression-scoreboard-complete">The regression scoreboard, complete</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#part-b-classification-metrics">Part B — Classification metrics</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#8-why-classification-scoring-is-harder">8. Why classification scoring is harder</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#9-the-confusion-matrix-and-its-children">9. The confusion matrix and its children</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#10-metrics-are-functions-of-the-threshold">10. Metrics are functions of the threshold</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#11-log-loss-grading-the-probabilities-themselves">11. Log loss — grading the probabilities themselves</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#multiclass-postscript">Multiclass postscript</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#12-choosing-a-metric-the-decision-tables">12. Choosing a metric: the decision tables</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#regression">Regression</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#classification">Classification</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#13-your-turn">13. Your turn</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#14-if-you-remember-nothing-else">14. If you remember nothing else</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#15-further-reading-and-glossary">15. Further reading and glossary</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#further-reading">Further reading</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#glossary">Glossary</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                   </li>
               </ul>
@@ -199,8 +261,8 @@ Loaded diabetes.csv from: data/diabetes.csv
 Advertising: 200 markets   |   Diabetes: 768 patients
 </code></pre></div>
 <hr />
-<h1 id="part-a-regression-metrics">Part A — Regression metrics</h1>
-<h2 id="1-the-raw-material-residuals">1. The raw material: residuals</h2>
+<h2 id="part-a-regression-metrics">Part A — Regression metrics</h2>
+<h3 id="1-the-raw-material-residuals">1. The raw material: residuals</h3>
 <p>A regression metric is always some way of <em>summarizing the residuals</em> — the per-sample errors
 <span class="arithmatex">\(e_i = y_i - \hat{y}_i\)</span> — into a single number. Different summaries emphasize different things; that's the
 whole story of this half of the module.</p>
@@ -248,7 +310,7 @@ cancel, and a model that overshoots half the time and undershoots the other half
 score a perfect 0. Every metric below is a different answer to the cancellation problem — and each answer
 smuggles in an opinion about <em>which errors matter most</em>.</p>
 <hr />
-<h2 id="2-mae-mean-absolute-error">2. MAE — Mean Absolute Error</h2>
+<h3 id="2-mae-mean-absolute-error">2. MAE — Mean Absolute Error</h3>
 <p>The most direct fix: kill the signs with an absolute value, then average.</p>
 <div class="arithmatex">\[\text{MAE} = \frac{1}{m} \sum_{i=1}^{m} \left| y_i - \hat{y}_i \right|\]</div>
 <div class="highlight"><pre><span></span><code><span class="n">mae_scratch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y_test</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">))</span>
@@ -271,7 +333,7 @@ model steers deliveries, one market missed by 8,000 units might be a genuine cri
 missed by 4,000 are shrugs. Sometimes big errors should count <em>more than proportionally</em> — which is
 exactly what squaring does.</p>
 <hr />
-<h2 id="3-mse-mean-squared-error">3. MSE — Mean Squared Error</h2>
+<h3 id="3-mse-mean-squared-error">3. MSE — Mean Squared Error</h3>
 <p>Kill the signs by squaring instead:</p>
 <div class="arithmatex">\[\text{MSE} = \frac{1}{m} \sum_{i=1}^{m} \left( y_i - \hat{y}_i \right)^2\]</div>
 <p>This is an old friend wearing a metric's hat — it is (up to a constant) the <strong>cost function that least
@@ -297,7 +359,7 @@ MSE (scikit-learn):   3.7968
 <p>Point 1 is a feature or a bug depending on the domain. Point 2 is just a bug — and it has a one-character
 fix.</p>
 <hr />
-<h2 id="4-rmse-root-mean-squared-error">4. RMSE — Root Mean Squared Error</h2>
+<h3 id="4-rmse-root-mean-squared-error">4. RMSE — Root Mean Squared Error</h3>
 <p>Take the square root and the units come back:</p>
 <div class="arithmatex">\[\text{RMSE} = \sqrt{\frac{1}{m} \sum_{i=1}^{m} \left( y_i - \hat{y}_i \right)^2}\]</div>
 <div class="highlight"><pre><span></span><code><span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
@@ -319,7 +381,7 @@ Two reading rules:</p>
   residual histogram in Section 1.</li>
 </ul>
 <p>But "big-error emphasis" has a dark side, and it deserves a live demonstration.</p>
-<h3 id="stress-test-one-bad-data-point">Stress test: one bad data point</h3>
+<h4 id="stress-test-one-bad-data-point">Stress test: one bad data point</h4>
 <p>Real datasets contain flukes — a data-entry typo, a market disrupted by a one-off event. Let's corrupt
 exactly <strong>one</strong> of our 60 test labels (add 40 to it, as if someone fat-fingered an extra digit) and watch
 what each metric does:</p>
@@ -387,7 +449,7 @@ metric is "wrong" — they answer different questions:</p>
 <p>The general principle, worth engraving: <strong>an outlier-sensitive metric can't tell you whether the model is
 bad or one label is bad.</strong> If RMSE looks alarming, check the residuals before blaming the model.</p>
 <hr />
-<h2 id="5-r2-skill-relative-to-a-baseline">5. R² — skill, relative to a baseline</h2>
+<h3 id="5-r2-skill-relative-to-a-baseline">5. R² — skill, relative to a baseline</h3>
 <p>MAE and RMSE share a blind spot: they're <strong>scale-bound</strong>. Is RMSE = 1.9 good? For sales in the 1–27 range,
 probably; for temperatures in the 20–22 range, catastrophic. Without knowing the target's spread, the
 number floats free.</p>
@@ -443,7 +505,7 @@ toolbox.</strong></p>
   lunch is the next section's target.</li>
 </ul>
 <hr />
-<h2 id="6-adjusted-r2-charging-rent-for-features">6. Adjusted R² — charging rent for features</h2>
+<h3 id="6-adjusted-r2-charging-rent-for-features">6. Adjusted R² — charging rent for features</h3>
 <p>Watch the free lunch happen. We'll append columns of <strong>pure random noise</strong> to the Advertising features and
 refit. The noise contains no information about sales whatsoever — yet training R² will rise:</p>
 <div class="highlight"><pre><span></span><code><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -542,7 +604,7 @@ complexity pay rent.</p>
 classic statistics workflow. When you have a proper held-out set (our usual workflow), test-set metrics
 remain the gold standard; adjusted R² is the tool for when you can't afford one.</p>
 <hr />
-<h2 id="7-mape-mean-absolute-percentage-error">7. MAPE — Mean Absolute Percentage Error</h2>
+<h3 id="7-mape-mean-absolute-percentage-error">7. MAPE — Mean Absolute Percentage Error</h3>
 <p>One question none of the metrics above can answer: <em>is an error of 1.5 big?</em> It depends — 1,500 units
 missing from a 25,000-unit market is rounding error; from a 3,000-unit market it's half the business.
 MAPE rescales each error by the true value, making errors <strong>relative</strong>:</p>
@@ -569,7 +631,7 @@ model against last year's, without unit gymnastics. That makes MAPE a favourite 
   scores 33% — the <em>same absolute miss</em>, punished differently. MAPE systematically favours
   <em>under</em>-prediction.</li>
 </ul>
-<h3 id="the-regression-scoreboard-complete">The regression scoreboard, complete</h3>
+<h4 id="the-regression-scoreboard-complete">The regression scoreboard, complete</h4>
 <div class="highlight"><pre><span></span><code><span class="n">scoreboard</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
               <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
@@ -633,8 +695,8 @@ model against last year's, without unit gymnastics. That makes MAPE a favourite 
 <p>One model, six honest numbers, six different sentences about it. Which sentence you lead with is Section
 12's business. First — classification.</p>
 <hr />
-<h1 id="part-b-classification-metrics">Part B — Classification metrics</h1>
-<h2 id="8-why-classification-scoring-is-harder">8. Why classification scoring is harder</h2>
+<h2 id="part-b-classification-metrics">Part B — Classification metrics</h2>
+<h3 id="8-why-classification-scoring-is-harder">8. Why classification scoring is harder</h3>
 <p>A regression error has a <em>size</em> — summarizing sizes is all Part A did. A classification error has no size;
 it has a <strong>type</strong>. Calling a diabetic patient healthy and calling a healthy patient diabetic are both
 "one error", but they are different <em>kinds</em> of wrong, with different costs. Any single number that forgets
@@ -665,7 +727,7 @@ Always-predict-healthy:       0.654   ← the baseline to beat
 patients are healthy, so our models' ≈73% is far less impressive than it sounds — and on a rarer disease
 the baseline would beat any honest model. Accuracy averages over error <em>types</em>; to see the types we open
 the confusion matrix.</p>
-<h2 id="9-the-confusion-matrix-and-its-children">9. The confusion matrix and its children</h2>
+<h3 id="9-the-confusion-matrix-and-its-children">9. The confusion matrix and its children</h3>
 <p>Everything in binary classification scoring is a ratio of the four cells (positive class = has diabetes):</p>
 <div align="center">
 <img src="../assets/confusion_matrix.png" width="380">
@@ -742,7 +804,7 @@ weighted avg       0.74      0.74      0.74       231
 <p>For a screening tool, that recall row is the headline: roughly a third of the true diabetics walk out
 undiagnosed. Which raises the question the next section answers live: those metrics were computed at the
 default 0.5 threshold — <em>what if we move it?</em></p>
-<h2 id="10-metrics-are-functions-of-the-threshold">10. Metrics are functions of the threshold</h2>
+<h3 id="10-metrics-are-functions-of-the-threshold">10. Metrics are functions of the threshold</h3>
 <p><code>predict</code> is just <code>predict_proba</code> plus a cutoff. The cutoff is <strong>ours to choose</strong>, and every choice buys
 recall with precision or vice versa. In the Logistic Regression module this was an exercise; now let's
 sweep the whole dial and plot the trade-off:</p>
@@ -800,7 +862,7 @@ Pruned tree          AUC = 0.752
 </code></pre></div>
 <p>Use AUC to <em>compare models before committing to a threshold</em>; use the threshold sweep to <em>choose the
 operating point</em> once the domain costs are on the table. Two tools, two different moments in the workflow.</p>
-<h2 id="11-log-loss-grading-the-probabilities-themselves">11. Log loss — grading the probabilities themselves</h2>
+<h3 id="11-log-loss-grading-the-probabilities-themselves">11. Log loss — grading the probabilities themselves</h3>
 <p>One dimension remains unexamined. Accuracy &amp; co. judge the <em>labels</em>; AUC judges the <em>ranking</em>; but many
 applications consume the <strong>probability itself</strong> — a 90% diabetes risk and a 51% risk trigger very
 different clinical responses, even though both round to "positive". A model whose probabilities are
@@ -887,7 +949,7 @@ tree's leaves are mixed, its probabilities humbler, its log loss far saner; logi
 <p>Moral: <strong>accuracy measures how often you're right; log loss measures whether your confidence can be
 trusted.</strong> If downstream decisions consume the probability (risk scores, triage, bidding), evaluate with
 log loss — it will catch overconfident models that accuracy waves through.</p>
-<h3 id="multiclass-postscript">Multiclass postscript</h3>
+<h4 id="multiclass-postscript">Multiclass postscript</h4>
 <p>Everything here generalizes to <span class="arithmatex">\(K\)</span> classes exactly as the Decision Trees module showed: the confusion
 matrix becomes <span class="arithmatex">\(K \times K\)</span>, per-class precision/recall/F1 get combined by <strong>macro / weighted / micro</strong>
 averaging, and log loss becomes cross-entropy. As a reminder of where the levers are:</p>

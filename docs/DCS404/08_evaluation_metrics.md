@@ -114,9 +114,9 @@ print(f"Advertising: {ads.shape[0]} markets   |   Diabetes: {diabetes.shape[0]} 
 
 
 ---
-# Part A — Regression metrics
+## Part A — Regression metrics
 
-## 1. The raw material: residuals
+### 1. The raw material: residuals
 
 A regression metric is always some way of *summarizing the residuals* — the per-sample errors
 $e_i = y_i - \hat{y}_i$ — into a single number. Different summaries emphasize different things; that's the
@@ -177,7 +177,7 @@ score a perfect 0. Every metric below is a different answer to the cancellation 
 smuggles in an opinion about *which errors matter most*.
 
 ---
-## 2. MAE — Mean Absolute Error
+### 2. MAE — Mean Absolute Error
 
 The most direct fix: kill the signs with an absolute value, then average.
 
@@ -209,7 +209,7 @@ missed by 4,000 are shrugs. Sometimes big errors should count *more than proport
 exactly what squaring does.
 
 ---
-## 3. MSE — Mean Squared Error
+### 3. MSE — Mean Squared Error
 
 Kill the signs by squaring instead:
 
@@ -244,7 +244,7 @@ Point 1 is a feature or a bug depending on the domain. Point 2 is just a bug —
 fix.
 
 ---
-## 4. RMSE — Root Mean Squared Error
+### 4. RMSE — Root Mean Squared Error
 
 Take the square root and the units come back:
 
@@ -274,7 +274,7 @@ Two reading rules:
 
 But "big-error emphasis" has a dark side, and it deserves a live demonstration.
 
-### Stress test: one bad data point
+#### Stress test: one bad data point
 
 Real datasets contain flukes — a data-entry typo, a market disrupted by a one-off event. Let's corrupt
 exactly **one** of our 60 test labels (add 40 to it, as if someone fat-fingered an extra digit) and watch
@@ -353,7 +353,7 @@ The general principle, worth engraving: **an outlier-sensitive metric can't tell
 bad or one label is bad.** If RMSE looks alarming, check the residuals before blaming the model.
 
 ---
-## 5. R² — skill, relative to a baseline
+### 5. R² — skill, relative to a baseline
 
 MAE and RMSE share a blind spot: they're **scale-bound**. Is RMSE = 1.9 good? For sales in the 1–27 range,
 probably; for temperatures in the 20–22 range, catastrophic. Without knowing the target's spread, the
@@ -424,7 +424,7 @@ Two cautions before we move on:
   lunch is the next section's target.
 
 ---
-## 6. Adjusted R² — charging rent for features
+### 6. Adjusted R² — charging rent for features
 
 Watch the free lunch happen. We'll append columns of **pure random noise** to the Advertising features and
 refit. The noise contains no information about sales whatsoever — yet training R² will rise:
@@ -536,7 +536,7 @@ classic statistics workflow. When you have a proper held-out set (our usual work
 remain the gold standard; adjusted R² is the tool for when you can't afford one.
 
 ---
-## 7. MAPE — Mean Absolute Percentage Error
+### 7. MAPE — Mean Absolute Percentage Error
 
 One question none of the metrics above can answer: *is an error of 1.5 big?* It depends — 1,500 units
 missing from a 25,000-unit market is rounding error; from a 3,000-unit market it's half the business.
@@ -571,7 +571,7 @@ Its fine print is sharp, though:
   scores 33% — the *same absolute miss*, punished differently. MAPE systematically favours
   *under*-prediction.
 
-### The regression scoreboard, complete
+#### The regression scoreboard, complete
 
 
 ```python
@@ -645,9 +645,9 @@ One model, six honest numbers, six different sentences about it. Which sentence 
 12's business. First — classification.
 
 ---
-# Part B — Classification metrics
+## Part B — Classification metrics
 
-## 8. Why classification scoring is harder
+### 8. Why classification scoring is harder
 
 A regression error has a *size* — summarizing sizes is all Part A did. A classification error has no size;
 it has a **type**. Calling a diabetic patient healthy and calling a healthy patient diabetic are both
@@ -686,7 +686,7 @@ patients are healthy, so our models' ≈73% is far less impressive than it sound
 the baseline would beat any honest model. Accuracy averages over error *types*; to see the types we open
 the confusion matrix.
 
-## 9. The confusion matrix and its children
+### 9. The confusion matrix and its children
 
 Everything in binary classification scoring is a ratio of the four cells (positive class = has diabetes):
 
@@ -752,7 +752,7 @@ For a screening tool, that recall row is the headline: roughly a third of the tr
 undiagnosed. Which raises the question the next section answers live: those metrics were computed at the
 default 0.5 threshold — *what if we move it?*
 
-## 10. Metrics are functions of the threshold
+### 10. Metrics are functions of the threshold
 
 `predict` is just `predict_proba` plus a cutoff. The cutoff is **ours to choose**, and every choice buys
 recall with precision or vice versa. In the Logistic Regression module this was an exercise; now let's
@@ -833,7 +833,7 @@ for model, name in [(clf_logreg, "Logistic regression"), (clf_tree, "Pruned tree
 Use AUC to *compare models before committing to a threshold*; use the threshold sweep to *choose the
 operating point* once the domain costs are on the table. Two tools, two different moments in the workflow.
 
-## 11. Log loss — grading the probabilities themselves
+### 11. Log loss — grading the probabilities themselves
 
 One dimension remains unexamined. Accuracy & co. judge the *labels*; AUC judges the *ranking*; but many
 applications consume the **probability itself** — a 90% diabetes risk and a 51% risk trigger very
@@ -935,7 +935,7 @@ Moral: **accuracy measures how often you're right; log loss measures whether you
 trusted.** If downstream decisions consume the probability (risk scores, triage, bidding), evaluate with
 log loss — it will catch overconfident models that accuracy waves through.
 
-### Multiclass postscript
+#### Multiclass postscript
 
 Everything here generalizes to $K$ classes exactly as the Decision Trees module showed: the confusion
 matrix becomes $K \times K$, per-class precision/recall/F1 get combined by **macro / weighted / micro**

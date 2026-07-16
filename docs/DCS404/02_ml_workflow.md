@@ -302,7 +302,7 @@ That's not failure; that's the process working as intended. Let me draw it.
 
 <center>
 
-<img src ="02_ml_workflow_files/images/crispdm.png" width = "900" height ="700">
+<img src ="../assets/crispdm.png" width = "900" height ="700">
 
 
 Fig: CRISP-DM Process flow 
@@ -392,7 +392,7 @@ Data needs to be there to start any data science project or data analysis projec
 
 <center>
 
-<img src ="02_ml_workflow_files/images/datacollection.png" width = "650" height ="450">
+<img src ="../assets/datacollection.png" width = "650" height ="450">
 
 Fig: Different ways of Data collection.
 </center>
@@ -1626,7 +1626,7 @@ lap.
 
 
 <center>
-<img src = "02_ml_workflow_files/images/crispdminfographics.png" width="900" height="700">
+<img src = "../assets/crispdminfographics.png" width="900" height="700">
 
 Fig: CRISP-DM Infographics
 </center>

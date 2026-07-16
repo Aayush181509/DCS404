@@ -8,6 +8,10 @@ nav:
   - Machine Learning and AI:
     - Introduction to Machine Learning: DCS404/01_introduction_to_machine_learning.md
     - ML Workflow: DCS404/02_ml_workflow.md
+    - Regression: DCS404/03_regression.md
+    - Gradient Descent: DCS404/04_gradient_descent.md
+    - Regularization: DCS404/05_regularization.md
+    - Classification & Logistic Regression: DCS404/06_logistic_regression.md
 
 theme:
   # name: material

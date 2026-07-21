@@ -73,7 +73,7 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../10_time_series_foundations/">Time Series Foundations</a>
                   </li>
-                  <li class="toctree-l1"><a class="" href="../11_exponential_smoothing.md">Exponential Smoothing</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../11_exponential_smoothing/">Exponential Smoothing</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">ARIMA and SARIMA Models</a>
     <ul class="current">
@@ -646,6 +646,8 @@ differences, and undoing that transformation (plus its prediction intervals) bec
 <p><img alt="png" src="../12_arima_models_files/12_arima_models_23_0.png" /></p>
 <div class="highlight"><pre><span></span><code>ADF-selected d = 1   (final p-value 0.00000)
 
+
+
 Fitted on the ORIGINAL series with d=1:
   phi_1   = 0.514  (true 0.5)
   theta_1 = 0.400  (true 0.4)
@@ -954,30 +956,56 @@ uncertainty estimates cannot be trusted even if the point forecasts look fine.</
     <span class="s2">&quot;SARIMA(0,1,1)(0,1,1)12&quot;</span><span class="p">:</span> <span class="n">pred</span><span class="p">,</span>
 <span class="p">}</span>
 
+<span class="c1"># Module 11&#39;s winner, refitted here so all three modules appear in one table</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.tsa.holtwinters</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExponentialSmoothing</span>
+<span class="n">hw</span> <span class="o">=</span> <span class="n">ExponentialSmoothing</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">trend</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="s2">&quot;mul&quot;</span><span class="p">,</span> <span class="n">seasonal_periods</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">baselines</span><span class="p">[</span><span class="s2">&quot;Holt-Winters (mult)&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hw</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">TEST_MONTHS</span><span class="p">)</span>
+
 <span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">train</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">baselines</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span><span class="o">.</span><span class="n">T</span>
 <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;MASE&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
 
 <span class="n">sn_mae</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Seasonal naive&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">]</span>
 <span class="n">sar_mae</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;SARIMA(0,1,1)(0,1,1)12&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SARIMA reduces MAE vs the best baseline by </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sar_mae</span><span class="o">/</span><span class="n">sn_mae</span><span class="p">)</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">hw_mae</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Holt-Winters (mult)&quot;</span><span class="p">,</span> <span class="s2">&quot;MAE&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SARIMA reduces MAE vs the best baseline (seasonal naive) by </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sar_mae</span><span class="o">/</span><span class="n">sn_mae</span><span class="p">)</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Holt-Winters beats SARIMA by a further </span><span class="si">{</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">hw_mae</span><span class="o">/</span><span class="n">sar_mae</span><span class="p">)</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>                           MAE    RMSE   MAPE  MASE
+Holt-Winters (mult)      28.98   32.49   6.39  1.01
 SARIMA(0,1,1)(0,1,1)12   39.45   43.19   8.52  1.38
 Seasonal naive           71.25   76.99  15.52  2.49
 Drift                    91.62  115.70  18.41  3.21
 Naive                   115.25  137.33  23.58  4.03
 Mean                    206.34  219.44  44.23  7.22
 
-SARIMA reduces MAE vs the best baseline by 45%
+SARIMA reduces MAE vs the best baseline (seasonal naive) by 45%
+Holt-Winters beats SARIMA by a further 27%
 </code></pre></div>
-<p>SARIMA wins on every metric, and the margin over seasonal naive — the baseline Module 10 warned was
-genuinely hard to beat — is substantial. Recall the diagnosis from Module 10: seasonal naive failed
-because it replayed last year and therefore ignored growth, giving residuals that were almost all
-positive. SARIMA fixes precisely that, because <span class="arithmatex">\(d=1\)</span> models the growth while <span class="arithmatex">\(D=1\)</span> models the season.</p>
-<p>That is the whole arc of these three modules in one table. Module 10 built the diagnosis and the
-benchmark, Module 11 and this module built models that beat it, and the improvement is measured on data
-that no model ever saw.</p>
+<p>Two things to take from this table, and the second one matters more than the first.</p>
+<p><strong>SARIMA comprehensively beats the baselines.</strong> It roughly halves the MAE of seasonal naive — the
+benchmark Module 10 warned was genuinely hard to beat — and it does so for the reason we designed it to:
+<span class="arithmatex">\(d=1\)</span> models the growth that seasonal naive ignored, while <span class="arithmatex">\(D=1\)</span> models the season that drift ignored.</p>
+<p><strong>And Holt-Winters, from Module 11, beats SARIMA.</strong> That is not a mistake, and it is not an argument that
+one module was wasted. It is the single most important empirical fact in this section of the course, so
+let us state it plainly: <strong>the more sophisticated, more famous, harder-to-fit model lost.</strong></p>
+<p>Why? Air Passengers is almost a textbook illustration of what exponential smoothing is built for — a
+smooth trend with a stable multiplicative seasonal profile, and nothing else going on. Holt-Winters models
+exactly that structure directly, with three interpretable components. SARIMA has to reach the same place
+through differencing and autocorrelation, which is a more roundabout route to a shape that was already
+obvious. In the M-competitions — the large-scale empirical forecasting contests that settled a lot of
+these arguments — simple exponential smoothing methods beat ARIMA on a great many real series, and this
+is a small replication of that result.</p>
+<p>The correct conclusion is <em>not</em> "ARIMA is bad". ARIMA earns its keep where the structure is genuinely
+autocorrelative rather than componential, where you need exogenous regressors (Section 11), or where you
+want the statistical apparatus — significance tests, information criteria, principled prediction
+intervals — that the Box-Jenkins framework provides and exponential smoothing does not. The conclusion is:</p>
+<blockquote>
+<p><strong>Model complexity is not a proxy for model quality. Fit both, hold out a test set, and let it decide.</strong></p>
+</blockquote>
+<p>That is the arc of all three modules. Module 10 built the diagnosis and the benchmark; Modules 11 and 12
+built competing models; and the ranking between them was settled by data no model had seen, not by which
+one had the more impressive derivation.</p>
 <div class="highlight"><pre><span></span><code><span class="n">sarima_resid</span> <span class="o">=</span> <span class="n">test</span> <span class="o">-</span> <span class="n">pred</span>
 <span class="n">sn_resid</span> <span class="o">=</span> <span class="n">test</span> <span class="o">-</span> <span class="n">baselines</span><span class="p">[</span><span class="s2">&quot;Seasonal naive&quot;</span><span class="p">]</span>
 
@@ -1143,6 +1171,12 @@ legitimate feature or a form of hindsight that would be unavailable in a real fo
    summer flag added nothing because the seasonal terms already knew. And any exogenous variable must be
    <em>available for the future periods you forecast</em>.</p>
 </li>
+<li>
+<p><strong>Holt-Winters beat SARIMA on this series.</strong> The simpler, older, componential model won because the
+   data's structure (smooth trend, stable multiplicative season) is exactly what it represents directly.
+   Sophistication is not quality. Fit the simple model and the complex one, score both on held-out data,
+   and prefer the winner — not the one with the longer derivation.</p>
+</li>
 </ol>
 <hr />
 <h2 id="14-further-reading-and-glossary">14. Further reading and glossary</h2>
@@ -1246,7 +1280,7 @@ legitimate feature or a form of hindsight that would be unavailable in a real fo
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../10_time_series_foundations/" class="btn btn-neutral float-left" title="Time Series Foundations"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../11_exponential_smoothing/" class="btn btn-neutral float-left" title="Exponential Smoothing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -1270,7 +1304,7 @@ legitimate feature or a form of hindsight that would be unavailable in a real fo
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../10_time_series_foundations/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../11_exponential_smoothing/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>

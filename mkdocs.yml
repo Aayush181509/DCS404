@@ -14,6 +14,13 @@ nav:
     - Classification & Logistic Regression: DCS404/06_logistic_regression.md
     - Decision Trees: DCS404/07_decision_trees.md
     - Evaluation Metrics: DCS404/08_evaluation_metrics.md
+    - K-Nearest Neighbors: DCS404/09_knn.md
+  - Time Series Analysis:
+    - Time Series Foundations: DCS404/10_time_series_foundations.md
+    - Exponential Smoothing: DCS404/11_exponential_smoothing.md
+    - ARIMA and SARIMA Models: DCS404/12_arima_models.md
+  - Final Project:
+    - Project Work: DCS404/project/00_final_project.md
 
 theme:
   # name: material

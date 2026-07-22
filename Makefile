@@ -13,7 +13,7 @@ OUTPUT_DIR := docs/DCS404
 
 NOTEBOOKS  := $(wildcard $(INPUT_DIR)/*.ipynb)
 
-.PHONY: run deploy build serve convert all convert-all
+.PHONY: run deploy build serve convert all convert-all convert-project
 
 run:
 	python main.py
@@ -38,5 +38,9 @@ convert-all:
 		echo "Converting $$nb..."; \
 		jupyter nbconvert --to markdown $$nb --output-dir=$(OUTPUT_DIR); \
 	done
+
+# Final project notebook (lives in notebooks/project/, not picked up by convert-all)
+convert-project:
+	jupyter nbconvert --to markdown notebooks/project/00_final_project.ipynb --output-dir=$(OUTPUT_DIR)/project
 
 all: build serve

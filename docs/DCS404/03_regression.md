@@ -1093,9 +1093,9 @@ Use our `ols_fit` function on `radio` vs `sales`, then verify the two parameters
 `LinearRegression`, as we did for TV in Section 7. Write the fitted equation in a markdown cell.
 
 **Exercise 2 — Spend the money.**
-Using the multiple regression from Section 8: predict sales for a market with a \$100k TV budget, \$30k radio
-budget, and \$20k newspaper budget (mind the units — budgets are in thousands). According to the model, which
-single medium gives the most extra sales per additional \$1,000?
+Using the multiple regression from Section 8: predict sales for a market with a \$$100k$ TV budget, \$$30k$ radio
+budget, and \$$20$k newspaper budget (mind the units — budgets are in thousands). According to the model, which
+single medium gives the most extra sales per additional \$$1,000$?
 
 **Exercise 3 — Break the assumptions on purpose.**
 Add a fake feature `total = TV + radio + newspaper` to the multiple regression from Section 8 and refit. What

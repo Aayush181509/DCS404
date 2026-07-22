@@ -140,6 +140,11 @@
                   <li class="toctree-l1"><a class="reference internal" href="../12_arima_models/">ARIMA and SARIMA Models</a>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">Final Project</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../project/00_final_project/">Project Work</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -1028,9 +1033,9 @@ into your fingers.</p>
 Use our <code>ols_fit</code> function on <code>radio</code> vs <code>sales</code>, then verify the two parameters against scikit-learn's
 <code>LinearRegression</code>, as we did for TV in Section 7. Write the fitted equation in a markdown cell.</p>
 <p><strong>Exercise 2 — Spend the money.</strong>
-Using the multiple regression from Section 8: predict sales for a market with a $100k TV budget, $30k radio
-budget, and $20k newspaper budget (mind the units — budgets are in thousands). According to the model, which
-single medium gives the most extra sales per additional $1,000?</p>
+Using the multiple regression from Section 8: predict sales for a market with a $<span class="arithmatex">\(100k\)</span> TV budget, $<span class="arithmatex">\(30k\)</span> radio
+budget, and $<span class="arithmatex">\(20\)</span>k newspaper budget (mind the units — budgets are in thousands). According to the model, which
+single medium gives the most extra sales per additional $<span class="arithmatex">\(1,000\)</span>?</p>
 <p><strong>Exercise 3 — Break the assumptions on purpose.</strong>
 Add a fake feature <code>total = TV + radio + newspaper</code> to the multiple regression from Section 8 and refit. What
 happens to the coefficients? Which assumption from Section 3 did you just violate?</p>

@@ -17,10 +17,17 @@ nav:
     - Decision Trees: DCS404/07_decision_trees.md
     - Evaluation Metrics: DCS404/08_evaluation_metrics.md
     - K-Nearest Neighbors: DCS404/09_knn.md
+  - Unsupervised Learning:
+    - K-Means Clustering: DCS404/15_kmeans_clustering.md
+  - Recommender Systems:
+    - Recommender Systems: DCS404/16_recommender_systems.md
   - Time Series Analysis:
     - Time Series Foundations: DCS404/10_time_series_foundations.md
     - Exponential Smoothing: DCS404/11_exponential_smoothing.md
     - ARIMA and SARIMA Models: DCS404/12_arima_models.md
+  - Deep Learning:
+    - Neural Networks: DCS404/13_neural_networks.md
+    - PyTorch and ANN: DCS404/14_pytorch_ann.md
   - Final Project:
     - Project Work: DCS404/project/00_final_project.md
 

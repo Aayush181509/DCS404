@@ -3,6 +3,8 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+graphify-out/
+artificial-intelligence-and-machine-learning-fundamentals-1st-ed.pdf
 # C extensions
 *.so
 live-class/
@@ -224,3 +226,6 @@ site
 *.bak
 *.swp
 .vscode
+
+# Downloaded datasets too large to vendor (torchvision caches these on first run)
+notebooks/data/mnist/

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Principles of AI - DCS 404</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Principles of AI";
+        var mkdocs_page_input_path = "DCS404/17_principles_of_ai.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> DCS 404
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Welcome</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Getting Started</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../InstallationGuide/">Installation Guide</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">AI Foundations</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Principles of AI</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-work-through-this">How to work through this</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#learning-objectives">Learning objectives</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1-what-is-ai-and-how-is-it-different-from-machine-learning">1. What is AI, and how is it different from machine learning?</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#why-it-takes-many-disciplines">Why it takes many disciplines</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fields-of-ai-by-the-human-ability-they-copy">Fields of AI, by the human ability they copy</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#the-turing-test">The Turing test</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#two-kinds-of-reasoning-two-kinds-of-learning">Two kinds of reasoning, two kinds of learning</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-intelligent-agents">2. Intelligent agents</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-python-and-numpy-warm-up-textbook-exercise-1">3. Python and NumPy warm-up (textbook Exercise 1)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-problems-as-search-breadth-first-and-depth-first-search">4. Problems as search: breadth-first and depth-first search</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-the-state-space-of-tic-tac-toe">5. The state space of Tic-Tac-Toe</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#how-big-is-the-game-textbook-exercise-2">How big is the game? (textbook Exercise 2)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a-random-player-textbook-exercise-3">A random player (textbook Exercise 3)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-textbook-corrections-chapter-1">6. Textbook corrections (Chapter 1)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-your-turn">7. Your turn</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-if-you-remember-nothing-else">8. If you remember nothing else</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9-further-reading-and-glossary">9. Further reading and glossary</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#further-reading">Further reading</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#glossary">Glossary</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../18_search_and_games/">Search and Games</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Machine Learning and AI</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../01_introduction_to_machine_learning/">Introduction to Machine Learning</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02_ml_workflow/">ML Workflow</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03_regression/">Regression</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04_gradient_descent/">Gradient Descent</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05_regularization/">Regularization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../06_logistic_regression/">Classification & Logistic Regression</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../07_decision_trees/">Decision Trees</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../08_evaluation_metrics/">Evaluation Metrics</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../09_knn/">K-Nearest Neighbors</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Unsupervised Learning</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../15_kmeans_clustering/">K-Means Clustering</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Recommender Systems</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../16_recommender_systems/">Recommender Systems</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Time Series Analysis</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../10_time_series_foundations/">Time Series Foundations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../11_exponential_smoothing/">Exponential Smoothing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../12_arima_models/">ARIMA and SARIMA Models</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Deep Learning</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../13_neural_networks/">Neural Networks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../14_pytorch_ann/">PyTorch and ANN</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Final Project</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../project/00_final_project/">Project Work</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">DCS 404</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">AI Foundations</li>
+      <li class="breadcrumb-item active">Principles of AI</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="principles-of-ai">Principles of AI</h1>
+<p><strong>DCS 404 · Data Science and Machine Learning</strong></p>
+<hr />
+<p>What does it actually mean for a program to be <em>intelligent</em>? Before this course builds a single
+machine-learning model, this module answers that question. It covers what AI is, where machine learning fits
+inside it, what an <strong>intelligent agent</strong> is, and how an agent can think ahead by treating a problem as a
+<strong>search</strong> through possible futures.</p>
+<p>The running example is <strong>Tic-Tac-Toe</strong>. It's small enough to understand completely, and yet it already has
+over a quarter of a million possible games. That <strong>combinatorial explosion</strong> is the reason AI needs clever
+algorithms rather than brute force, and it sets up the next module.</p>
+<p>This notebook covers the Week 3 reading, <em>Artificial Intelligence and Machine Learning Fundamentals</em> (Nagy,
+2018), <strong>Chapter 1 — Principles of AI</strong>. Chapter 2 is the next module, <strong>Search and Games</strong>.</p>
+<h2 id="how-to-work-through-this">How to work through this</h2>
+<p>Run every code cell in order (<code>Shift + Enter</code>). Section 5 builds the Tic-Tac-Toe helpers (<code>winner</code>,
+<code>all_moves</code>, <code>draw_board</code>, …), and the next module reuses them.</p>
+<p><strong>Reading alongside the textbook:</strong></p>
+<table>
+<thead>
+<tr>
+<th>This notebook</th>
+<th>Textbook, Chapter 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. What AI is</td>
+<td>pp. 1–8</td>
+</tr>
+<tr>
+<td>2. Intelligent agents</td>
+<td>pp. 7–8, 16</td>
+</tr>
+<tr>
+<td>3. Python and NumPy</td>
+<td>pp. 9–15 (Exercise 1)</td>
+</tr>
+<tr>
+<td>4. BFS and DFS</td>
+<td>pp. 17–20</td>
+</tr>
+<tr>
+<td>5. The Tic-Tac-Toe state space</td>
+<td>pp. 20–27 (Exercises 2–3, Activity 1)</td>
+</tr>
+</tbody>
+</table>
+<p>The book's code has a few bugs, some of which change the answer. This notebook fixes them as it goes, and
+Section 6 lists every correction.</p>
+<p>Nothing here needs a library beyond NumPy and Matplotlib.</p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>After completing this module you will be able to:</p>
+<ul>
+<li>Define AI and machine learning (Samuel's and Mitchell's definitions), and explain why <strong>AI ⊃ ML</strong>: why
+  rule-based and search-based agents count as AI with no learning at all.</li>
+<li>Name the main fields of AI and the disciplines it draws on, and describe the Turing test.</li>
+<li>Describe an <strong>intelligent agent</strong> (sensors, actuators, goal, performance measure) and write one as a
+  function from percepts to actions.</li>
+<li>Use NumPy for basic matrix operations, and handle floating-point results correctly.</li>
+<li>Model a problem as a <strong>state space</strong> (initial state, successor function, goal test) and explore it with
+  <strong>breadth-first</strong> and <strong>depth-first search</strong>.</li>
+<li>Represent a game in code, and measure the <strong>combinatorial explosion</strong> of its state space by counting every
+  possible game exactly.</li>
+</ul>
+<h2 id="setup">Setup</h2>
+<p>Run this once. It loads the libraries, sets the usual plotting style, and fixes a random seed so every
+simulated game comes out the same each time you run it.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">heapq</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span><span class="p">,</span> <span class="n">Counter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">permutations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rectangle</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s2">&quot;figure.figsize&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">),</span>
+    <span class="s2">&quot;figure.dpi&quot;</span><span class="p">:</span> <span class="mi">110</span><span class="p">,</span>
+    <span class="s2">&quot;axes.grid&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;grid.alpha&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s2">&quot;axes.spines.top&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;axes.spines.right&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;font.size&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="n">RANDOM_STATE</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+
+<span class="c1"># Set to True to play against the AIs yourself (uses input(); leave False when running all cells)</span>
+<span class="n">INTERACTIVE</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ready.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Ready.
+</code></pre></div>
+<hr />
+<h2 id="1-what-is-ai-and-how-is-it-different-from-machine-learning">1. What is AI, and how is it different from machine learning?</h2>
+<p>The textbook starts with three definitions worth knowing by heart:</p>
+<blockquote>
+<p><strong>Artificial Intelligence</strong> is a science that's used to construct intelligence using hardware and software
+solutions.</p>
+<p><strong>Machine learning</strong> is a field of study concerned with giving computers the ability to learn without being
+explicitly programmed. <em>(Arthur Samuel, 1959)</em></p>
+<p>A computer program is said to <strong>learn</strong> from experience <span class="arithmatex">\(E\)</span> with respect to a task <span class="arithmatex">\(T\)</span> and a performance
+measure <span class="arithmatex">\(P\)</span>, if its performance on <span class="arithmatex">\(T\)</span>, as measured by <span class="arithmatex">\(P\)</span>, improves with experience <span class="arithmatex">\(E\)</span>.
+<em>(Tom Mitchell, 1997)</em></p>
+</blockquote>
+<p>Mitchell's definition is the useful one, because you can check it. Spam filtering: <span class="arithmatex">\(T\)</span> = label emails,
+<span class="arithmatex">\(P\)</span> = accuracy, <span class="arithmatex">\(E\)</span> = a pile of emails humans have already labelled. Every model in the later modules of this
+course fits that pattern.</p>
+<p>Now the key point. <strong>You can build AI without machine learning.</strong> If you hard-code rules, or search through
+possible futures, your program can act intelligently with no experience <span class="arithmatex">\(E\)</span> at all. All of this module works
+that way:</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Where the "intelligence" comes from</th>
+<th>Example in this course</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rules</strong></td>
+<td>A human writes them down</td>
+<td>Next module: "if you can win, win; if they can win, block"</td>
+</tr>
+<tr>
+<td><strong>Search</strong></td>
+<td>Looking ahead at possible futures</td>
+<td>Next module: A*, Minimax</td>
+</tr>
+<tr>
+<td><strong>Machine learning</strong></td>
+<td>Patterns found in data</td>
+<td>Regression, Decision Trees, K-Means, Neural Networks</td>
+</tr>
+</tbody>
+</table>
+<h3 id="why-it-takes-many-disciplines">Why it takes many disciplines</h3>
+<p>A self-driving car has to <em>sense</em> other cars (computer vision), <em>predict</em> where they'll go (statistics),
+<em>plan</em> a route (graph theory and search), and <em>move</em> the wheels (control theory and robotics). The book lists
+the disciplines AI borrows from: robotics, algorithm theory, statistics, psychology, software engineering,
+mathematics, control theory, information theory, graph theory, physics, and computer graphics.</p>
+<h3 id="fields-of-ai-by-the-human-ability-they-copy">Fields of AI, by the human ability they copy</h3>
+<table>
+<thead>
+<tr>
+<th>Human ability</th>
+<th>AI field</th>
+<th>Everyday example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Listening and speaking</td>
+<td>Speech recognition and synthesis</td>
+<td>Voice assistants, live translation</td>
+</tr>
+<tr>
+<td>Understanding language</td>
+<td>Natural Language Processing (NLP)</td>
+<td>Chatbots, search engines</td>
+</tr>
+<tr>
+<td>Remembering things</td>
+<td>Knowledge bases and ontologies</td>
+<td>Google's Knowledge Graph</td>
+</tr>
+<tr>
+<td>Thinking</td>
+<td>Expert systems, neural networks</td>
+<td>Medical diagnosis support</td>
+</tr>
+<tr>
+<td>Seeing</td>
+<td>Computer vision</td>
+<td>Face unlock, medical imaging</td>
+</tr>
+<tr>
+<td>Moving</td>
+<td>Robotics and control theory</td>
+<td>Warehouse robots, drones</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-turing-test">The Turing test</h3>
+<p>Alan Turing proposed testing intelligence by conversation. A judge chats by text with a human and a machine.
+If the judge can't reliably tell which is which, the machine passes. The textbook (2018) predicted this
+wouldn't happen until "the late 2020s". <strong>That prediction has aged fast.</strong> In a 2025 study (Jones &amp; Bergen),
+judges picked GPT-4.5 as the human 73% of the time when it was prompted to adopt a persona. Large language
+models have changed this part of the field more than any other since the book was written. The <em>Total</em>
+Turing test, which adds vision and physical movement, is still far off.</p>
+<h3 id="two-kinds-of-reasoning-two-kinds-of-learning">Two kinds of reasoning, two kinds of learning</h3>
+<ul>
+<li><strong>Classification</strong> works out what category something belongs to ("Jane is female and a parent, so Jane is
+  a mother"). <strong>Prediction</strong> estimates something from patterns ("someone who buys organic milk is more likely
+  to buy organic yoghurt").</li>
+<li><strong>Supervised learning</strong> learns from labelled examples (Regression, Logistic Regression, Decision Trees,
+  KNN). <strong>Unsupervised learning</strong> finds structure without labels (K-Means). Both get full modules later in
+  the course.</li>
+</ul>
+<hr />
+<h2 id="2-intelligent-agents">2. Intelligent agents</h2>
+<p>The central object in AI (and in this module) is the <strong>agent</strong>. The textbook defines an intelligent agent as
+something that:</p>
+<ul>
+<li>is <strong>autonomous</strong>,</li>
+<li><strong>observes</strong> its surroundings through <strong>sensors</strong>,</li>
+<li><strong>acts</strong> on its environment through <strong>actuators</strong>, and</li>
+<li>directs its activity toward a <strong>goal</strong>.</li>
+</ul>
+<p>Put simply: <strong>an agent is a function from what it perceives to what it does.</strong> Let's write one. Here is the
+classic <em>vacuum world</em>: two rooms, <code>A</code> and <code>B</code>, each either clean or dirty. The vacuum's sensors tell it which
+room it's in and whether that room is dirty. Its actuators can <code>Suck</code>, or move <code>Left</code> / <code>Right</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">reflex_vacuum_agent</span><span class="p">(</span><span class="n">percept</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;A simple reflex agent: the action depends only on the current percept.&#39;&#39;&#39;</span>
+    <span class="n">location</span><span class="p">,</span> <span class="n">is_dirty</span> <span class="o">=</span> <span class="n">percept</span>
+    <span class="k">if</span> <span class="n">is_dirty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Suck&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;Right&quot;</span> <span class="k">if</span> <span class="n">location</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span> <span class="k">else</span> <span class="s2">&quot;Left&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_vacuum_world</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">dirt</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+    <span class="n">dirt</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">dirt</span><span class="p">)</span>                                   <span class="c1"># don&#39;t mutate the caller&#39;s dict</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">percept</span> <span class="o">=</span> <span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">dirt</span><span class="p">[</span><span class="n">location</span><span class="p">])</span>            <span class="c1"># sensors</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="p">(</span><span class="n">percept</span><span class="p">)</span>                         <span class="c1"># the agent decides</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;Suck&quot;</span> <span class="ow">and</span> <span class="n">dirt</span><span class="p">[</span><span class="n">location</span><span class="p">]:</span>         <span class="c1"># actuators change the world</span>
+            <span class="n">dirt</span><span class="p">[</span><span class="n">location</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">score</span> <span class="o">+=</span> <span class="mi">10</span>                                 <span class="c1"># reward for cleaning</span>
+        <span class="k">elif</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;Left&quot;</span><span class="p">,</span> <span class="s2">&quot;Right&quot;</span><span class="p">):</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span> <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;Left&quot;</span> <span class="k">else</span> <span class="s2">&quot;B&quot;</span>
+            <span class="n">score</span> <span class="o">-=</span> <span class="mi">1</span>                                  <span class="c1"># small cost for moving</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t=</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">  percept=</span><span class="si">{</span><span class="n">percept</span><span class="si">!s:</span><span class="s2">&lt;14</span><span class="si">}</span><span class="s2"> action=</span><span class="si">{</span><span class="n">action</span><span class="si">:</span><span class="s2">&lt;6</span><span class="si">}</span><span class="s2"> world=</span><span class="si">{</span><span class="n">dirt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Performance score: </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">run_vacuum_world</span><span class="p">(</span><span class="n">reflex_vacuum_agent</span><span class="p">,</span> <span class="n">dirt</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>t=0  percept=(&#39;A&#39;, True)    action=Suck   world={&#39;A&#39;: False, &#39;B&#39;: True}
+t=1  percept=(&#39;A&#39;, False)   action=Right  world={&#39;A&#39;: False, &#39;B&#39;: True}
+t=2  percept=(&#39;B&#39;, True)    action=Suck   world={&#39;A&#39;: False, &#39;B&#39;: False}
+t=3  percept=(&#39;B&#39;, False)   action=Left   world={&#39;A&#39;: False, &#39;B&#39;: False}
+t=4  percept=(&#39;A&#39;, False)   action=Right  world={&#39;A&#39;: False, &#39;B&#39;: False}
+t=5  percept=(&#39;B&#39;, False)   action=Left   world={&#39;A&#39;: False, &#39;B&#39;: False}
+Performance score: 16
+</code></pre></div>
+<p>Both rooms are clean after three steps, and the agent never "learned" anything. Its designer wrote the rules
+in advance. Two ideas from this toy come back in every later section:</p>
+<ol>
+<li><strong>Performance measure.</strong> We judged the agent by a score (+10 per clean, −1 per move). The textbook calls
+   this the "carrot and stick": good actions are rewarded and bad ones punished. A game AI's goal is the same
+   in principle: get the highest score, where winning is the top score.</li>
+<li><strong>The agent wastes moves.</strong> After both rooms are clean it keeps going back and forth (<code>Left</code>, <code>Right</code>, …),
+   because a <em>reflex</em> agent can't think ahead. Agents that <strong>look ahead</strong> at the consequences of their actions
+   are what the rest of this module builds.</li>
+</ol>
+<hr />
+<h2 id="3-python-and-numpy-warm-up-textbook-exercise-1">3. Python and NumPy warm-up (textbook Exercise 1)</h2>
+<p>The book uses Python because it is readable, quick to write, and has the best set of AI/ML libraries: NumPy,
+SciPy, pandas, scikit-learn, NLTK, TensorFlow, PyTorch. You met NumPy on DataCamp in Week 2. Here is the
+book's Exercise 1, <em>updated</em>: the book uses <code>np.mat</code>, which <strong>was removed in NumPy 2.0</strong>. Use a normal
+<code>np.array</code> and the <code>@</code> operator for matrix multiplication.</p>
+<div class="highlight"><pre><span></span><code><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A @ A  (matrix product, i.e. the &#39;square&#39; of A):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">A * A  (element-wise -- NOT the matrix product, a classic mistake):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">*</span> <span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Transpose A.T:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">np.linalg.det(A) = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exact determinant by hand: </span><span class="si">{</span><span class="mi">1</span><span class="o">*</span><span class="mi">5</span><span class="o">*</span><span class="mi">9</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="mi">6</span><span class="o">*</span><span class="mi">7</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="o">*</span><span class="mi">4</span><span class="o">*</span><span class="mi">8</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">*</span><span class="mi">6</span><span class="o">*</span><span class="mi">8</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="mi">4</span><span class="o">*</span><span class="mi">9</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="o">*</span><span class="mi">5</span><span class="o">*</span><span class="mi">7</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>A @ A  (matrix product, i.e. the &#39;square&#39; of A):
+[[ 30  36  42]
+ [ 66  81  96]
+ [102 126 150]]
+
+A * A  (element-wise -- NOT the matrix product, a classic mistake):
+[[ 1  4  9]
+ [16 25 36]
+ [49 64 81]]
+
+Transpose A.T:
+[[1 4 7]
+ [2 5 8]
+ [3 6 9]]
+
+np.linalg.det(A) = np.float64(-9.51619735392994e-16)
+Exact determinant by hand: 0
+</code></pre></div>
+<p>Two lessons:</p>
+<ul>
+<li><code>@</code> is matrix multiplication. <code>*</code> multiplies cell by cell. The top-left cell of <code>A @ A</code> is
+  <span class="arithmatex">\(1\cdot1 + 2\cdot4 + 3\cdot7 = 30\)</span>: row 1 of <span class="arithmatex">\(A\)</span> dotted with column 1 of <span class="arithmatex">\(A\)</span>.</li>
+<li>The determinant is exactly <strong>0</strong> (row 3 − row 2 = row 2 − row 1, so the rows are linearly dependent). NumPy
+  returns a tiny non-zero number instead. That's <strong>floating-point rounding</strong>, not a bug. Never test float
+  results with <code>==</code>; use <code>np.isclose</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>          <span class="c1"># False -- rounding error</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># True  -- the right way to compare floats</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>False
+True
+</code></pre></div>
+<hr />
+<h2 id="4-problems-as-search-breadth-first-and-depth-first-search">4. Problems as search: breadth-first and depth-first search</h2>
+<p>To make an agent look ahead, we describe the problem as a <strong>state space</strong>:</p>
+<ul>
+<li>an <strong>initial state</strong>, where we start;</li>
+<li>a <strong>successor function</strong> <code>succ(state)</code>, the states reachable in one action;</li>
+<li>a <strong>goal test</strong>, which says whether we're done.</li>
+</ul>
+<p>Starting at the initial state and applying <code>succ</code> over and over builds a <strong>search tree</strong>. The root is the
+start, each edge is an action, and leaves are states with no successors. <strong>Search algorithms differ only in
+the order they visit the tree.</strong></p>
+<p>The book's toy problem: start at <code>1</code>. Each step adds <strong>1 or 2</strong>. Stop at <strong>5</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">succ</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="n">value</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">node</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>                                   <span class="c1"># goal: a leaf</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="mi">5</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>                     <span class="c1"># can&#39;t jump past 5</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">value</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># (value, depth)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">bfs_tree</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="n">to_visit</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">root</span><span class="p">])</span>          <span class="c1"># a QUEUE: first in, first out</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">to_visit</span><span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">to_visit</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+        <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">to_visit</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">succ</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">visited</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">dfs_tree</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="n">to_visit</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span>                 <span class="c1"># a STACK: last in, first out</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">to_visit</span><span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">to_visit</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">to_visit</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">succ</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">visited</span>
+
+<span class="n">bfs_order</span><span class="p">,</span> <span class="n">dfs_order</span> <span class="o">=</span> <span class="n">bfs_tree</span><span class="p">(</span><span class="n">root</span><span class="p">),</span> <span class="n">dfs_tree</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;BFS visits (value, depth):&quot;</span><span class="p">,</span> <span class="n">bfs_order</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DFS visits (value, depth):&quot;</span><span class="p">,</span> <span class="n">dfs_order</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>BFS visits (value, depth): [(1, 1), (2, 2), (3, 2), (3, 3), (4, 3), (4, 3), (5, 3), (4, 4), (5, 4), (5, 4), (5, 4), (5, 5)]
+DFS visits (value, depth): [(1, 1), (3, 2), (5, 3), (4, 3), (5, 4), (2, 2), (4, 3), (5, 4), (3, 3), (5, 4), (4, 4), (5, 5)]
+</code></pre></div>
+<p>The <strong>only</strong> difference between the two functions is <code>popleft()</code> (queue) versus <code>pop()</code> (stack). It's easier
+to see on the tree itself. The number in each node's corner is the order it was visited:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build_tree</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="p">()):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Return a nested dict {&#39;node&#39;: (value, depth), &#39;id&#39;: path, &#39;children&#39;: [...]}.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;node&quot;</span><span class="p">:</span> <span class="n">node</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span>
+            <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">build_tree</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">succ</span><span class="p">(</span><span class="n">node</span><span class="p">))]}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">layout</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Assign x positions so leaves are evenly spaced; returns (positions, next_free_x).&#39;&#39;&#39;</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">positions</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">tree</span><span class="p">[</span><span class="s2">&quot;children&quot;</span><span class="p">]:</span>
+        <span class="n">positions</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span> <span class="k">return</span> <span class="n">positions</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">tree</span><span class="p">[</span><span class="s2">&quot;children&quot;</span><span class="p">]:</span>
+        <span class="n">positions</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">layout</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">positions</span><span class="p">);</span> <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="n">ch</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">positions</span><span class="p">[</span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="o">-</span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">positions</span><span class="p">,</span> <span class="n">x</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visit_rank</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">order_fn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Map each tree-node id to its visit number under BFS/DFS (same traversal, on ids).&#39;&#39;&#39;</span>
+    <span class="n">ranks</span><span class="p">,</span> <span class="n">frontier</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">deque</span><span class="p">([</span><span class="n">tree</span><span class="p">])</span> <span class="k">if</span> <span class="n">order_fn</span> <span class="o">==</span> <span class="s2">&quot;bfs&quot;</span> <span class="k">else</span> <span class="p">[</span><span class="n">tree</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">frontier</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">frontier</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span> <span class="k">if</span> <span class="n">order_fn</span> <span class="o">==</span> <span class="s2">&quot;bfs&quot;</span> <span class="k">else</span> <span class="n">frontier</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">ranks</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ranks</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">frontier</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;children&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ranks</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">ranks</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">pos</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">layout</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">edges</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">t</span><span class="p">[</span><span class="s2">&quot;children&quot;</span><span class="p">]:</span>
+            <span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">),</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]],</span> <span class="n">pos</span><span class="p">[</span><span class="n">ch</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">],</span> <span class="p">[</span><span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span> <span class="n">edges</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+    <span class="n">edges</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nodes</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]];</span> <span class="n">v</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="s2">&quot;node&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">520</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:green&quot;</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="mi">5</span> <span class="k">else</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.22</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">0.22</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ranks</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">t</span><span class="p">[</span><span class="s2">&quot;children&quot;</span><span class="p">]:</span> <span class="n">nodes</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+    <span class="n">nodes</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">build_tree</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+<span class="n">draw_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">visit_rank</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s2">&quot;bfs&quot;</span><span class="p">),</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;BFS: level by level&quot;</span><span class="p">)</span>
+<span class="n">draw_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">visit_rank</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s2">&quot;dfs&quot;</span><span class="p">),</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;DFS: dive deep first&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Same tree, different visiting order (red = visit number, green = goal value 5)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="png" src="../17_principles_of_ai_files/17_principles_of_ai_16_0.png" /></p>
+<ul>
+<li><strong>BFS</strong> visits level by level, so the <strong>first goal it reaches is the shallowest one</strong>. Here that's 5 at
+  depth 3 (<code>1 → 3 → 5</code>). For problems where every step costs the same, BFS finds a shortest path.</li>
+<li><strong>DFS</strong> dives straight down one branch first. It uses little memory but doesn't guarantee the shortest
+  path. In a huge tree like chess it can get lost down one very deep branch.</li>
+</ul>
+<p><strong>Trees vs graphs.</strong> If two different paths can reach the <em>same</em> state (and in Tic-Tac-Toe they can), you
+should keep a <strong>visited set</strong> and skip states you've already seen. Otherwise you do the same work again and
+again. The next module's pathfinding section shows exactly how much that costs.</p>
+<hr />
+<h2 id="5-the-state-space-of-tic-tac-toe">5. The state space of Tic-Tac-Toe</h2>
+<p>Two players take turns on a 3×3 board. <code>X</code> moves first. Three in a row, column, or diagonal wins. Like the
+book, we store the board as a <strong>9-character string</strong>, cells indexed like this:</p>
+<div class="highlight"><pre><span></span><code> 0 | 1 | 2
+---+---+---
+ 3 | 4 | 5
+---+---+---
+ 6 | 7 | 8
+</code></pre></div>
+<p>Our AI plays <code>X</code> and moves first. The opponent plays <code>O</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">EMPTY</span><span class="p">,</span> <span class="n">AI</span><span class="p">,</span> <span class="n">OPP</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;O&quot;</span>
+<span class="n">LINES</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>      <span class="c1"># rows</span>
+         <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>      <span class="c1"># columns</span>
+         <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>                 <span class="c1"># diagonals</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">other</span><span class="p">(</span><span class="n">sign</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">OPP</span> <span class="k">if</span> <span class="n">sign</span> <span class="o">==</span> <span class="n">AI</span> <span class="k">else</span> <span class="n">AI</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">winner</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Return &#39;X&#39; or &#39;O&#39; if someone has three in a line, else EMPTY.&#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">LINES</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">board</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">board</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">!=</span> <span class="n">EMPTY</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">EMPTY</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">is_over</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">winner</span><span class="p">(</span><span class="n">board</span><span class="p">)</span> <span class="o">!=</span> <span class="n">EMPTY</span> <span class="ow">or</span> <span class="n">EMPTY</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">board</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">all_moves</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">sign</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The successor function: every board reachable by `sign` placing one mark.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">board</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">+</span> <span class="n">board</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">board</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">EMPTY</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">print_board</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span><span class="p">:</span><span class="mi">3</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_board</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Draw a board; optional `values` (len 9) are printed small in empty cells (used for heuristics).&#39;&#39;&#39;</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.5</span> <span class="o">-</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">3</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">EMPTY</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="n">AI</span> <span class="k">else</span> <span class="s2">&quot;tab:red&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:green&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.33</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">0.33</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="n">example</span> <span class="o">=</span> <span class="s2">&quot;X...O...X&quot;</span>        <span class="c1"># the book&#39;s example: X at 0, O at 4, X at 8</span>
+<span class="n">print_board</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;winner:&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">winner</span><span class="p">(</span><span class="n">example</span><span class="p">)),</span> <span class="s2">&quot;| game over:&quot;</span><span class="p">,</span> <span class="n">is_over</span><span class="p">(</span><span class="n">example</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;O&#39;s possible next boards:&quot;</span><span class="p">,</span> <span class="n">all_moves</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">OPP</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code> X | . | .
+ . | O | .
+ . | . | X
+
+winner: &#39;.&#39; | game over: False
+O&#39;s possible next boards: [&#39;XO..O...X&#39;, &#39;X.O.O...X&#39;, &#39;X..OO...X&#39;, &#39;X...OO..X&#39;, &#39;X...O.O.X&#39;, &#39;X...O..OX&#39;]
+</code></pre></div>
+<h3 id="how-big-is-the-game-textbook-exercise-2">How big is the game? (textbook Exercise 2)</h3>
+<p>A rough upper bound: the first player has 9 choices, the second 8, then 7, … so at most
+<span class="arithmatex">\(9! = 362{,}880\)</span> move sequences. Many games end early with a win, so the true number is smaller. We don't
+have to estimate it, though. A short recursive search can <strong>count every possible game exactly</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">count_games</span><span class="p">(</span><span class="n">board</span><span class="o">=</span><span class="n">EMPTY</span> <span class="o">*</span> <span class="mi">9</span><span class="p">,</span> <span class="n">turn</span><span class="o">=</span><span class="n">AI</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Exhaustively play out every legal game; return a Counter of outcomes.&#39;&#39;&#39;</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">winner</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">w</span> <span class="o">!=</span> <span class="n">EMPTY</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Counter</span><span class="p">({</span><span class="n">w</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">EMPTY</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">board</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Counter</span><span class="p">({</span><span class="s2">&quot;draw&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">nxt</span> <span class="ow">in</span> <span class="n">all_moves</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">turn</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">count_games</span><span class="p">(</span><span class="n">nxt</span><span class="p">,</span> <span class="n">other</span><span class="p">(</span><span class="n">turn</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">total</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">outcomes</span> <span class="o">=</span> <span class="n">count_games</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;9! upper bound:       </span><span class="si">{</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Actual distinct games: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">outcomes</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">   (</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  X (first player) wins: </span><span class="si">{</span><span class="n">outcomes</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  O (second player) wins: </span><span class="si">{</span><span class="n">outcomes</span><span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  draws:                  </span><span class="si">{</span><span class="n">outcomes</span><span class="p">[</span><span class="s1">&#39;draw&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>9! upper bound:       362,880
+Actual distinct games: 255,168   (0.6s)
+  X (first player) wins: 131,184
+  O (second player) wins: 77,904
+  draws:                  46,080
+</code></pre></div>
+<p>That's <strong>255,168</strong> possible games for a game children solve at the kitchen table. Our numbers match the
+research figures the book quotes (131,184 / 77,904 / 46,080). Here is how fast the tree grows, move by move:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">states_per_depth</span><span class="p">():</span>
+    <span class="n">level</span><span class="p">,</span> <span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">EMPTY</span> <span class="o">*</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="n">AI</span> <span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">OPP</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">level</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">all_moves</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">sign</span><span class="p">)]</span>
+        <span class="n">sizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">level</span> <span class="k">if</span> <span class="n">winner</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="n">EMPTY</span><span class="p">]</span>   <span class="c1"># finished games stop growing</span>
+    <span class="k">return</span> <span class="n">sizes</span>
+
+<span class="n">sizes</span> <span class="o">=</span> <span class="n">states_per_depth</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sizes</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">s</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;number of moves made&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;boards at this depth (log scale)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Combinatorial explosion: Tic-Tac-Toe&#39;s game tree, level by level&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="png" src="../17_principles_of_ai_files/17_principles_of_ai_23_0.png" /></p>
+<p>Note the <strong>log scale</strong>: each bar is roughly 5–8× the one before it, until wins start ending games. Chess
+starts with 20 legal moves instead of 9, and games last about 40 moves per side, not 4–5. No computer can list
+every chess game. <strong>This explosion is why the rest of the module exists.</strong> Every technique that follows is a
+way to avoid looking at most of this tree.</p>
+<blockquote>
+<p><strong>⚠️ Textbook check: why the book says 266,073.</strong> The book's Activity 1 reports 266,073 games, which is
+<em>more</em> than the true 255,168. That's impossible, and its own note quotes the correct figure. The cause is
+its <code>filter_wins</code> function, which calls <code>list.remove()</code> <strong>while looping over the same list</strong>. Removing an
+item shifts the rest of the list left, so the loop skips whatever comes next. If that next board was also
+a finished game, it never gets filtered out, and its "children" get counted too. A three-line demo:</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">numbers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>      <span class="c1"># mutating the list we&#39;re iterating over...</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>                 <span class="c1"># ...leaves a 2 behind: the second 2 was skipped</span>
+
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numbers</span> <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">]</span>   <span class="c1"># the safe way: build a new list</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[1, 2, 3]
+[1, 3]
+</code></pre></div>
+<h3 id="a-random-player-textbook-exercise-3">A random player (textbook Exercise 3)</h3>
+<p>The simplest possible agent picks any empty cell at random. Below, two random players face each other 10,000
+times. The book's version asks for the human's move with <code>input()</code>. To play the random AI yourself, set
+<code>INTERACTIVE = True</code> in Setup and run the cell after the tournament.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">random_policy</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">sign</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">all_moves</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">sign</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">play_game</span><span class="p">(</span><span class="n">policy_x</span><span class="p">,</span> <span class="n">policy_o</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">EMPTY</span> <span class="o">*</span> <span class="mi">9</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Play one game; return the final board.&#39;&#39;&#39;</span>
+    <span class="n">board</span><span class="p">,</span> <span class="n">turn</span> <span class="o">=</span> <span class="n">start</span><span class="p">,</span> <span class="n">AI</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">is_over</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+        <span class="n">board</span> <span class="o">=</span> <span class="p">(</span><span class="n">policy_x</span> <span class="k">if</span> <span class="n">turn</span> <span class="o">==</span> <span class="n">AI</span> <span class="k">else</span> <span class="n">policy_o</span><span class="p">)(</span><span class="n">board</span><span class="p">,</span> <span class="n">turn</span><span class="p">)</span>
+        <span class="n">turn</span> <span class="o">=</span> <span class="n">other</span><span class="p">(</span><span class="n">turn</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">board</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tournament</span><span class="p">(</span><span class="n">policy_x</span><span class="p">,</span> <span class="n">policy_o</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">winner</span><span class="p">(</span><span class="n">play_game</span><span class="p">(</span><span class="n">policy_x</span><span class="p">,</span> <span class="n">policy_o</span><span class="p">))</span>
+        <span class="n">results</span><span class="p">[</span><span class="s2">&quot;X wins&quot;</span> <span class="k">if</span> <span class="n">w</span> <span class="o">==</span> <span class="n">AI</span> <span class="k">else</span> <span class="s2">&quot;O wins&quot;</span> <span class="k">if</span> <span class="n">w</span> <span class="o">==</span> <span class="n">OPP</span> <span class="k">else</span> <span class="s2">&quot;draw&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">results</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;X wins&quot;</span><span class="p">,</span> <span class="s2">&quot;O wins&quot;</span><span class="p">,</span> <span class="s2">&quot;draw&quot;</span><span class="p">)}</span>
+
+<span class="n">rand_vs_rand</span> <span class="o">=</span> <span class="n">tournament</span><span class="p">(</span><span class="n">random_policy</span><span class="p">,</span> <span class="n">random_policy</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;random X vs random O, 10,000 games:&quot;</span><span class="p">,</span> <span class="n">rand_vs_rand</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>random X vs random O, 10,000 games: {&#39;X wins&#39;: 5857, &#39;O wins&#39;: 2841, &#39;draw&#39;: 1302}
+</code></pre></div>
+<p>Even with no strategy at all, <strong>moving first is a big advantage</strong>: X wins far more often than O. But the
+random X still loses a lot of games, games where any child could have spotted the win or the block.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">human_policy</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="n">sign</span><span class="p">):</span>
+    <span class="n">print_board</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">cell</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Your move as </span><span class="si">{</span><span class="n">sign</span><span class="si">}</span><span class="s2"> (0-8): &quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">cell</span> <span class="o">&lt;=</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">board</span><span class="p">[</span><span class="n">cell</span><span class="p">]</span> <span class="o">==</span> <span class="n">EMPTY</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">board</span><span class="p">[:</span><span class="n">cell</span><span class="p">]</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">+</span> <span class="n">board</span><span class="p">[</span><span class="n">cell</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;That cell isn&#39;t free, try again.&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">INTERACTIVE</span><span class="p">:</span>
+    <span class="n">final</span> <span class="o">=</span> <span class="n">play_game</span><span class="p">(</span><span class="n">random_policy</span><span class="p">,</span> <span class="n">human_policy</span><span class="p">)</span>      <span class="c1"># the random AI is X and moves first; you are O</span>
+    <span class="n">print_board</span><span class="p">(</span><span class="n">final</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">({</span><span class="n">AI</span><span class="p">:</span> <span class="s2">&quot;The random AI wins.&quot;</span><span class="p">,</span> <span class="n">OPP</span><span class="p">:</span> <span class="s2">&quot;You win!&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">winner</span><span class="p">(</span><span class="n">final</span><span class="p">),</span> <span class="s2">&quot;Draw.&quot;</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipped: set INTERACTIVE = True in Setup to play against the random AI.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Skipped: set INTERACTIVE = True in Setup to play against the random AI.
+</code></pre></div>
+<p>Play a few games and you'll beat it easily. You already know rules it doesn't: <em>take a winning cell when you
+have one, block when the opponent has two in a row, start in a corner or the centre</em>. The next module,
+<strong>Search and Games</strong> (textbook Chapter 2), teaches the agent those rules. Then it goes further and lets the
+agent work out good moves for itself by <strong>searching</strong>, until it never loses a game.</p>
+<hr />
+<h2 id="6-textbook-corrections-chapter-1">6. Textbook corrections (Chapter 1)</h2>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>What the book says</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NumPy (Exercise 1)</td>
+<td><code>np.mat(...)</code>, and <code>A * A</code> for the matrix product</td>
+<td><code>np.mat</code> was removed in NumPy 2.0. Use <code>np.array</code> and <code>A @ A</code> (Section 3).</td>
+</tr>
+<tr>
+<td>BFS/DFS</td>
+<td>The first listing is introduced as "DFS" but is BFS; typo <code>visited_bodes</code></td>
+<td>BFS uses a queue (<code>popleft</code>), DFS a stack (<code>pop</code>) (Section 4).</td>
+</tr>
+<tr>
+<td>Exercise 3</td>
+<td>Defines <code>all_moves_from_board_list</code> but calls <code>all_moves_from_board</code></td>
+<td>Name mismatch: the code raises <code>NameError</code>.</td>
+</tr>
+<tr>
+<td>Activity 1</td>
+<td>266,073 possible games</td>
+<td><strong>255,168</strong>. <code>filter_wins</code> removes items from a list while iterating over it (Section 5).</td>
+</tr>
+<tr>
+<td>Turing test</td>
+<td>Predicted to be passed "in the late 2020s"</td>
+<td>Text-only Turing tests were already being passed by LLMs in 2025 (Section 1).</td>
+</tr>
+<tr>
+<td>Intelligent agents in games</td>
+<td>Dopamine called a "hormone"</td>
+<td>It acts here as a neurotransmitter. A minor point, but worth knowing.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-your-turn">7. Your turn</h2>
+<p>Add cells below each exercise. Exercises 2 and 4 consolidate the main ideas.</p>
+<p><strong>Exercise 1 — An agent with memory.</strong>
+The reflex vacuum agent in Section 2 keeps moving after both rooms are clean. Write an agent that remembers
+which rooms it has seen clean (use a <code>set</code> defined outside the function, or a small class) and returns
+<code>"NoOp"</code> once both are clean. Update <code>run_vacuum_world</code> so <code>"NoOp"</code> costs nothing, and compare the scores.</p>
+<p><strong>Exercise 2 — Graph search vs tree search.</strong>
+<code>bfs_tree</code> in Section 4 visits the state <code>(value=5)</code> several times, through different paths. Rewrite it to
+track a <code>visited</code> set of <em>values</em> (ignoring depth) and skip values it has already seen. How many nodes does it
+visit now? Does it still find the goal at the shallowest depth? Why?</p>
+<p><strong>Exercise 3 — How many positions, really?</strong>
+<code>count_games</code> counts <em>games</em> (move sequences). Modify it to also collect every <em>board</em> it reaches in a <code>set</code>.
+How many distinct positions are reachable in Tic-Tac-Toe? (You should get 5,478.) Why is that number so much
+smaller than 255,168?</p>
+<p><strong>Exercise 4 — Symmetry.</strong>
+Write <code>rotate(board)</code> (a 90° clockwise turn of the 9-character string) and <code>mirror(board)</code> (a left-right
+flip). Map each of the 5,478 positions from Exercise 3 to a <em>canonical</em> form (the alphabetically smallest of
+its 8 rotations and reflections) and count the unique canonical forms. You should get 765. By what factor
+does symmetry shrink the space?</p>
+<p><strong>Exercise 5 — Is the centre worth it?</strong>
+Write a <code>centre_first_policy</code> that takes the centre if it's free and otherwise plays randomly. Run 10,000
+games against <code>random_policy</code> (as X, then as O) using <code>tournament</code>, and compare the results with
+random vs random. What does this tell you about the value of a single good rule?</p>
+<hr />
+<h2 id="8-if-you-remember-nothing-else">8. If you remember nothing else</h2>
+<ol>
+<li>
+<p><strong>AI ⊃ ML.</strong> Machine learning (improving at a task <span class="arithmatex">\(T\)</span>, measured by <span class="arithmatex">\(P\)</span>, through experience <span class="arithmatex">\(E\)</span>) is one
+   route to artificial intelligence. Hand-written rules and search are others, and they need no training data
+   at all.</p>
+</li>
+<li>
+<p>AI borrows from many disciplines (statistics, graph theory, control theory, psychology, …). Its fields map
+   onto human abilities: speech, language, memory, thinking, vision and movement.</p>
+</li>
+<li>
+<p>An <strong>intelligent agent</strong> senses its environment, acts on it, and pursues a goal. Formally, it is a
+   function from percepts to actions, judged by a performance measure. A <em>reflex</em> agent can't think ahead.</p>
+</li>
+<li>
+<p>To make an agent plan, describe the problem as a <strong>state space</strong> (initial state, successor function, goal
+   test) and <strong>search</strong> it. <strong>BFS</strong> (a queue) finds the shallowest goal. <strong>DFS</strong> (a stack) dives deep and uses
+   less memory. Keep a <strong>visited set</strong> whenever states can repeat.</p>
+</li>
+<li>
+<p>State spaces <strong>explode combinatorially</strong>. Even Tic-Tac-Toe has 255,168 games, from a 9! = 362,880 upper
+   bound. Chess is far beyond any exhaustive search. Every technique in the next module is a way to avoid
+   looking at most of the tree.</p>
+</li>
+<li>
+<p>Read textbooks critically and <strong>verify numbers by running code</strong>. The book's 266,073 came from a
+   list-mutation bug, and only running the code showed it.</p>
+</li>
+</ol>
+<hr />
+<h2 id="9-further-reading-and-glossary">9. Further reading and glossary</h2>
+<h3 id="further-reading">Further reading</h3>
+<ul>
+<li>Zsolt Nagy (2018), <em>Artificial Intelligence and Machine Learning Fundamentals</em>, Packt. Chapter 1, the
+  Week 3 reading (with the corrections in Section 6).</li>
+<li>Stuart Russell &amp; Peter Norvig, <a href="https://aima.cs.berkeley.edu/"><em>Artificial Intelligence: A Modern Approach</em></a>
+  (4th ed.). Chapter 1 (what AI is), Chapter 2 (intelligent agents) and Chapter 3 (search).</li>
+<li>Alan Turing (1950), <a href="https://doi.org/10.1093/mind/LIX.236.433"><em>Computing Machinery and Intelligence</em></a>.
+  The paper that proposed the Turing test.</li>
+<li>Cameron Jones &amp; Benjamin Bergen (2025), <a href="https://arxiv.org/abs/2503.23674"><em>Large Language Models Pass the Turing Test</em></a>.</li>
+<li>Google for Developers, <a href="https://developers.google.com/machine-learning/problem-framing"><em>Introduction to Machine Learning Problem Framing</em></a>. The Week 3 assignment course.</li>
+</ul>
+<h3 id="glossary">Glossary</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Artificial intelligence</td>
+<td>Building systems that behave intelligently, by any method: rules, search or learning.</td>
+</tr>
+<tr>
+<td>Machine learning</td>
+<td>Improving at a task <span class="arithmatex">\(T\)</span>, measured by <span class="arithmatex">\(P\)</span>, through experience <span class="arithmatex">\(E\)</span> (Mitchell).</td>
+</tr>
+<tr>
+<td>Turing test</td>
+<td>A test of machine intelligence: can a judge tell the machine from a human in conversation?</td>
+</tr>
+<tr>
+<td>Intelligent agent</td>
+<td>An autonomous system that senses (sensors), acts (actuators) and pursues a goal.</td>
+</tr>
+<tr>
+<td>Performance measure</td>
+<td>The score an agent's behaviour is judged by.</td>
+</tr>
+<tr>
+<td>State space</td>
+<td>Every state a problem can be in, connected by the actions between them.</td>
+</tr>
+<tr>
+<td>Successor function</td>
+<td>Given a state, returns the states reachable in one action.</td>
+</tr>
+<tr>
+<td>Search tree</td>
+<td>The tree of states reached by repeatedly applying the successor function from the start.</td>
+</tr>
+<tr>
+<td>BFS / DFS</td>
+<td>Uninformed searches that visit level by level (queue) or branch by branch (stack).</td>
+</tr>
+<tr>
+<td>Combinatorial explosion</td>
+<td>The rapid, multiplicative growth of the number of states as depth increases.</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../InstallationGuide/" class="btn btn-neutral float-left" title="Installation Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../18_search_and_games/" class="btn btn-neutral float-right" title="Search and Games">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p>Copyright &copy; 2026 - Aayush Raj Regmi</p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../InstallationGuide/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../18_search_and_games/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../javascripts/mathjax.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -29,7 +29,8 @@ the same results.
 
 | Notebook | Topic | Main libraries |
 |---|---|---|
-| [`17_search_and_games`](notebooks/17_search_and_games.ipynb) | Principles of AI: agents, BFS/DFS, heuristics, A\*, Minimax, alpha-beta, Connect Four | `numpy`, `matplotlib` |
+| [`17_principles_of_ai`](notebooks/17_principles_of_ai.ipynb) | AI vs ML, intelligent agents, NumPy, BFS/DFS, the Tic-Tac-Toe state space | `numpy`, `matplotlib` |
+| [`18_search_and_games`](notebooks/18_search_and_games.ipynb) | Rule-based agents, heuristics, A\*, Minimax, alpha-beta, Negamax, Connect Four | `numpy`, `matplotlib` |
 | [`01_introduction_to_machine_learning`](notebooks/01_introduction_to_machine_learning.ipynb) | What ML is, types of learning, a first model | `scikit-learn` |
 | [`02_ml_workflow`](notebooks/02_ml_workflow.ipynb) | CRISP-DM, end-to-end workflow, model persistence | `scikit-learn`, `joblib` |
 | [`03_regression`](notebooks/03_regression.ipynb) | Simple, multiple and polynomial regression | `scikit-learn` |
@@ -58,7 +59,7 @@ The required text is Nagy, Z. (2018). *Artificial Intelligence and Machine Learn
 | Week | Textbook reading | Notebooks |
 |---|---|---|
 | 1–2 | Python basics (DataCamp) | — |
-| 3 | Ch 1 Principles of AI · Ch 2 AI with Search Techniques and Games | `17` (plus `01` for ML framing) |
+| 3 | Ch 1 Principles of AI · Ch 2 AI with Search Techniques and Games | `17` (Ch 1), `18` (Ch 2), plus `01` for ML framing |
 | 4 | Data preparation and feature engineering | `02` |
 | 5 | Ch 3 Regression · Ch 4 Classification | `03`, `04`, `05`, `06`, `08`, `09` |
 | 6 | Ch 5 Using Trees for Predictive Analysis | `07` |
@@ -141,7 +142,7 @@ To add or update a module:
 
 ```bash
 # 1. Convert the executed notebook to Markdown
-make convert NOTEBOOK=notebooks/17_search_and_games.ipynb
+make convert NOTEBOOK=notebooks/18_search_and_games.ipynb
 
 # 2. If it uses static images from notebooks/resources/images/, copy them to docs/DCS404/assets/
 #    and point the Markdown at ../assets/ instead of resources/images/
@@ -158,7 +159,7 @@ make convert NOTEBOOK=notebooks/17_search_and_games.ipynb
 ```
 DCS404/
 ├── notebooks/
-│   ├── 01_…17_*.ipynb           # lecture modules
+│   ├── 01_…18_*.ipynb           # lecture modules
 │   ├── project/                  # final project brief
 │   ├── data/                     # datasets (MNIST downloaded on demand)
 │   └── resources/
@@ -179,10 +180,11 @@ DCS404/
 
 ## A note on the textbook
 
-The Week 3 module re-implements the textbook's Chapter 1–2 code and found several errors, including a counting
+The Week 3 modules re-implement the textbook's Chapter 1–2 code and found several errors, including a counting
 bug that inflates the number of Tic-Tac-Toe games, swapped alpha-beta initial bounds, and library calls that no
-longer run on current NumPy and easyAI. Section 13 of
-[`17_search_and_games`](notebooks/17_search_and_games.ipynb) lists each one with its correction.
+longer run on current NumPy and easyAI. Each module ends with a corrections table:
+[`17_principles_of_ai`](notebooks/17_principles_of_ai.ipynb) (Section 6) and
+[`18_search_and_games`](notebooks/18_search_and_games.ipynb) (Section 8).
 
 ---
 

@@ -1,60 +1,50 @@
-# Principles of AI: Search and Games
+# Search and Games
 
 **DCS 404 · Data Science and Machine Learning**
 
 ---
 
-Every other module in this course is about **learning from data**: fit a line, grow a tree, cluster some
-points. This one isn't. Here we build programs that act intelligently with **no training data at all**. They
-play Tic-Tac-Toe without ever losing, find the shortest way through a maze, and beat a random Connect Four
-player every time. None of them learn anything. They **search**: they look at the possible futures and pick
-the move that leads to the best one.
+In the **Principles of AI** module we built a Tic-Tac-Toe agent that plays at random, and counted every
+possible game: 255,168 of them. This module turns that random player into one that **never loses**. Then it
+uses the same ideas to find the shortest way through a maze and to play Connect Four, a game far too big to
+search to the end.
 
-That's the first big lesson of this module, and of Chapter 1 of the course textbook: **machine learning is one
-way to get artificial intelligence, not the only way.** Search, rules, and heuristics were the main way to
-build AI for decades. They still run inside route planners, game engines, schedulers, and puzzle solvers
-today, and they still sit next to learned models in systems like AlphaGo.
+None of these agents learn anything from data. They **search**: they look at possible futures and pick the
+move that leads to the best one. Along the way you'll meet the core algorithms of classical AI. **Heuristics**
+are educated guesses that tell a search where to look. **A\*** is the shortest-path algorithm inside route
+planners and game engines. **Minimax** with **alpha-beta pruning** is the algorithm behind every classical
+chess program.
 
 This notebook covers the Week 3 reading, *Artificial Intelligence and Machine Learning Fundamentals* (Nagy,
-2018), **Chapter 1 — Principles of AI** and **Chapter 2 — AI with Search Techniques and Games**. Everything is
-built from scratch in plain Python, so you can see exactly how each algorithm works.
+2018), **Chapter 2 — AI with Search Techniques and Games**.
 
 ## How to work through this
 
-Run every code cell in order (`Shift + Enter`). Later sections reuse functions defined earlier: the
-Tic-Tac-Toe board helpers from Section 5 are used again in Sections 6, 7, 9 and 10.
+Run every code cell in order (`Shift + Enter`). Complete the **Principles of AI** module first. Setup
+below re-creates its Tic-Tac-Toe helpers, so this notebook also runs on its own.
 
-**Reading alongside the textbook.** Sections map to the book like this:
+**Reading alongside the textbook:**
 
-| This notebook | Textbook |
+| This notebook | Textbook, Chapter 2 |
 |---|---|
-| 1–3. What AI is, agents, Python/NumPy | Chapter 1, pp. 1–15 |
-| 4–5. BFS/DFS, the Tic-Tac-Toe state space | Chapter 1, pp. 16–27 (Exercises 2–3, Activity 1) |
-| 6. Teaching the agent rules | Chapter 2, pp. 30–34 (Exercise 4, Activities 2–3) |
-| 7. Heuristics | Chapter 2, pp. 35–42 (Exercise 5) |
-| 8. Pathfinding with BFS and A* | Chapter 2, pp. 42–63 (Exercises 6–7) |
-| 9–11. Minimax, alpha-beta, Negamax | Chapter 2, pp. 63–77 |
-| 12. Connect Four | Chapter 2, Activity 4 |
+| 1. Teaching the agent rules | pp. 30–34 (Exercise 4, Activities 2–3) |
+| 2. Heuristics | pp. 35–42 (Exercise 5) |
+| 3. Pathfinding with BFS and A* | pp. 42–63 (Exercises 6–7) |
+| 4–6. Minimax, alpha-beta, Negamax | pp. 63–77 |
+| 7. Connect Four | Activity 4 |
 
-The book's code has several bugs, some small and some that change the answer. This notebook fixes them as it
-goes. Section 13 lists every correction in one place, so you can check what you read against what you run.
-
-Nothing here needs a library beyond NumPy and Matplotlib. Every algorithm is written out by hand.
+The book's Chapter 2 code has several bugs, some of which change the answer. This notebook fixes them as it
+goes, and Section 8 lists every correction. Nothing here needs a library beyond NumPy and Matplotlib.
 
 ## Learning objectives
 
 After completing this module you will be able to:
 
-- Define AI and machine learning (Samuel's and Mitchell's definitions), and explain why **AI ⊃ ML**: why
-  search-based agents count as AI with no learning at all.
-- Describe an **intelligent agent** (sensors, actuators, goal) and write one as a function from percepts to
-  actions.
-- Model a problem as a **state space** (initial state, successor function, goal test) and explore it with
-  **breadth-first** and **depth-first search**.
-- Measure the **combinatorial explosion** of a game's state space, and use rules, symmetry and forced moves to
-  shrink it.
-- Explain what a **heuristic** is, and what makes one **admissible**.
-- Implement **A\*** pathfinding, and explain why it finds the shortest path when greedy search doesn't.
+- Shrink a game's state space with rules, symmetry and forced moves, and **prove** that an agent can't lose
+  by checking it against every possible opponent reply.
+- Explain what a **heuristic** is, write one for a game, and say what makes a heuristic **admissible**.
+- Implement **A\*** pathfinding, and explain why it finds the shortest path when greedy best-first search
+  doesn't.
 - Implement **Minimax**, speed it up with **alpha-beta pruning**, and simplify it to **Negamax**, then build
   a Tic-Tac-Toe player that never loses.
 - Write a depth-limited game AI with a heuristic evaluation for a game too large to search to the end
@@ -62,8 +52,9 @@ After completing this module you will be able to:
 
 ## Setup
 
-Run this once. It loads the libraries, sets the usual plotting style, and fixes a random seed so every
-simulated game in this notebook comes out the same each time you run it.
+Run this once. It loads the libraries and re-creates the Tic-Tac-Toe helpers from the Principles of AI
+module. The board is a 9-character string, cells `0`–`8` left to right, top to bottom. Our AI plays `X` and
+moves first.
 
 
 ```python
@@ -97,332 +88,6 @@ print("Ready.")
 
     Ready.
 
-
----
-## 1. What is AI, and how is it different from machine learning?
-
-The textbook starts with three definitions worth knowing by heart:
-
-> **Artificial Intelligence** is a science that's used to construct intelligence using hardware and software
-> solutions.
-
-> **Machine learning** is a field of study concerned with giving computers the ability to learn without being
-> explicitly programmed. *(Arthur Samuel, 1959)*
-
-> A computer program is said to **learn** from experience $E$ with respect to a task $T$ and a performance
-> measure $P$, if its performance on $T$, as measured by $P$, improves with experience $E$.
-> *(Tom Mitchell, 1997)*
-
-Mitchell's definition is the useful one, because you can check it. Spam filtering: $T$ = label emails,
-$P$ = accuracy, $E$ = a pile of emails humans have already labelled. Every model in the later modules of this
-course fits that pattern.
-
-Now the key point. **You can build AI without machine learning.** If you hard-code rules, or search through
-possible futures, your program can act intelligently with no experience $E$ at all. All of this module works
-that way:
-
-| Approach | Where the "intelligence" comes from | Example in this course |
-|---|---|---|
-| **Rules** | A human writes them down | Section 6: "if you can win, win; if they can win, block" |
-| **Search** | Looking ahead at possible futures | Sections 8–12: A*, Minimax |
-| **Machine learning** | Patterns found in data | Regression, Decision Trees, K-Means, Neural Networks |
-
-### Why it takes many disciplines
-
-A self-driving car has to *sense* other cars (computer vision), *predict* where they'll go (statistics),
-*plan* a route (graph theory and search), and *move* the wheels (control theory and robotics). The book lists
-the disciplines AI borrows from: robotics, algorithm theory, statistics, psychology, software engineering,
-mathematics, control theory, information theory, graph theory, physics, and computer graphics.
-
-### Fields of AI, by the human ability they copy
-
-| Human ability | AI field | Everyday example |
-|---|---|---|
-| Listening and speaking | Speech recognition and synthesis | Voice assistants, live translation |
-| Understanding language | Natural Language Processing (NLP) | Chatbots, search engines |
-| Remembering things | Knowledge bases and ontologies | Google's Knowledge Graph |
-| Thinking | Expert systems, neural networks | Medical diagnosis support |
-| Seeing | Computer vision | Face unlock, medical imaging |
-| Moving | Robotics and control theory | Warehouse robots, drones |
-
-### The Turing test
-
-Alan Turing proposed testing intelligence by conversation. A judge chats by text with a human and a machine.
-If the judge can't reliably tell which is which, the machine passes. The textbook (2018) predicted this
-wouldn't happen until "the late 2020s". **That prediction has aged fast.** In a 2025 study (Jones & Bergen),
-judges picked GPT-4.5 as the human 73% of the time when it was prompted to adopt a persona. Large language
-models have changed this part of the field more than any other since the book was written. The *Total*
-Turing test, which adds vision and physical movement, is still far off.
-
-### Two kinds of reasoning, two kinds of learning
-
-- **Classification** works out what category something belongs to ("Jane is female and a parent, so Jane is
-  a mother"). **Prediction** estimates something from patterns ("someone who buys organic milk is more likely
-  to buy organic yoghurt").
-- **Supervised learning** learns from labelled examples (Regression, Logistic Regression, Decision Trees,
-  KNN). **Unsupervised learning** finds structure without labels (K-Means). Both get full modules later in
-  the course.
-
----
-## 2. Intelligent agents
-
-The central object in AI (and in this module) is the **agent**. The textbook defines an intelligent agent as
-something that:
-
-- is **autonomous**,
-- **observes** its surroundings through **sensors**,
-- **acts** on its environment through **actuators**, and
-- directs its activity toward a **goal**.
-
-Put simply: **an agent is a function from what it perceives to what it does.** Let's write one. Here is the
-classic *vacuum world*: two rooms, `A` and `B`, each either clean or dirty. The vacuum's sensors tell it which
-room it's in and whether that room is dirty. Its actuators can `Suck`, or move `Left` / `Right`.
-
-
-```python
-def reflex_vacuum_agent(percept):
-    '''A simple reflex agent: the action depends only on the current percept.'''
-    location, is_dirty = percept
-    if is_dirty:
-        return "Suck"
-    return "Right" if location == "A" else "Left"
-
-def run_vacuum_world(agent, dirt, location="A", steps=6):
-    dirt = dict(dirt)                                   # don't mutate the caller's dict
-    score = 0
-    for t in range(steps):
-        percept = (location, dirt[location])            # sensors
-        action = agent(percept)                         # the agent decides
-        if action == "Suck" and dirt[location]:         # actuators change the world
-            dirt[location] = False
-            score += 10                                 # reward for cleaning
-        elif action in ("Left", "Right"):
-            location = "A" if action == "Left" else "B"
-            score -= 1                                  # small cost for moving
-        print(f"t={t}  percept={percept!s:<14} action={action:<6} world={dirt}")
-    print(f"Performance score: {score}")
-
-run_vacuum_world(reflex_vacuum_agent, dirt={"A": True, "B": True})
-```
-
-    t=0  percept=('A', True)    action=Suck   world={'A': False, 'B': True}
-    t=1  percept=('A', False)   action=Right  world={'A': False, 'B': True}
-    t=2  percept=('B', True)    action=Suck   world={'A': False, 'B': False}
-    t=3  percept=('B', False)   action=Left   world={'A': False, 'B': False}
-    t=4  percept=('A', False)   action=Right  world={'A': False, 'B': False}
-    t=5  percept=('B', False)   action=Left   world={'A': False, 'B': False}
-    Performance score: 16
-
-
-Both rooms are clean after three steps, and the agent never "learned" anything. Its designer wrote the rules
-in advance. Two ideas from this toy come back in every later section:
-
-1. **Performance measure.** We judged the agent by a score (+10 per clean, −1 per move). The textbook calls
-   this the "carrot and stick": good actions are rewarded and bad ones punished. A game AI's goal is the same
-   in principle: get the highest score, where winning is the top score.
-2. **The agent wastes moves.** After both rooms are clean it keeps going back and forth (`Left`, `Right`, …),
-   because a *reflex* agent can't think ahead. Agents that **look ahead** at the consequences of their actions
-   are what the rest of this module builds.
-
----
-## 3. Python and NumPy warm-up (textbook Exercise 1)
-
-The book uses Python because it is readable, quick to write, and has the best set of AI/ML libraries: NumPy,
-SciPy, pandas, scikit-learn, NLTK, TensorFlow, PyTorch. You met NumPy on DataCamp in Week 2. Here is the
-book's Exercise 1, *updated*: the book uses `np.mat`, which **was removed in NumPy 2.0**. Use a normal
-`np.array` and the `@` operator for matrix multiplication.
-
-
-```python
-A = np.array([[1, 2, 3],
-              [4, 5, 6],
-              [7, 8, 9]])
-
-print("A @ A  (matrix product, i.e. the 'square' of A):")
-print(A @ A)
-print("\nA * A  (element-wise -- NOT the matrix product, a classic mistake):")
-print(A * A)
-print("\nTranspose A.T:")
-print(A.T)
-print(f"\nnp.linalg.det(A) = {np.linalg.det(A)!r}")
-print(f"Exact determinant by hand: {1*5*9 + 2*6*7 + 3*4*8 - 1*6*8 - 2*4*9 - 3*5*7}")
-```
-
-    A @ A  (matrix product, i.e. the 'square' of A):
-    [[ 30  36  42]
-     [ 66  81  96]
-     [102 126 150]]
-    
-    A * A  (element-wise -- NOT the matrix product, a classic mistake):
-    [[ 1  4  9]
-     [16 25 36]
-     [49 64 81]]
-    
-    Transpose A.T:
-    [[1 4 7]
-     [2 5 8]
-     [3 6 9]]
-    
-    np.linalg.det(A) = np.float64(-9.51619735392994e-16)
-    Exact determinant by hand: 0
-
-
-Two lessons:
-
-- `@` is matrix multiplication. `*` multiplies cell by cell. The top-left cell of `A @ A` is
-  $1\cdot1 + 2\cdot4 + 3\cdot7 = 30$: row 1 of $A$ dotted with column 1 of $A$.
-- The determinant is exactly **0** (row 3 − row 2 = row 2 − row 1, so the rows are linearly dependent). NumPy
-  returns a tiny non-zero number instead. That's **floating-point rounding**, not a bug. Never test float
-  results with `==`; use `np.isclose`.
-
-
-```python
-print(np.linalg.det(A) == 0)          # False -- rounding error
-print(np.isclose(np.linalg.det(A), 0))  # True  -- the right way to compare floats
-```
-
-    False
-    True
-
-
----
-## 4. Problems as search: breadth-first and depth-first search
-
-To make an agent look ahead, we describe the problem as a **state space**:
-
-- an **initial state**, where we start;
-- a **successor function** `succ(state)`, the states reachable in one action;
-- a **goal test**, which says whether we're done.
-
-Starting at the initial state and applying `succ` over and over builds a **search tree**. The root is the
-start, each edge is an action, and leaves are states with no successors. **Search algorithms differ only in
-the order they visit the tree.**
-
-The book's toy problem: start at `1`. Each step adds **1 or 2**. Stop at **5**.
-
-
-```python
-def succ(node):
-    value, depth = node
-    if value == 5:
-        return []                                   # goal: a leaf
-    if value == 4:
-        return [(5, depth + 1)]                     # can't jump past 5
-    return [(value + 1, depth + 1), (value + 2, depth + 1)]
-
-root = (1, 1)   # (value, depth)
-
-def bfs_tree(root):
-    to_visit = deque([root])          # a QUEUE: first in, first out
-    visited = []
-    while to_visit:
-        node = to_visit.popleft()
-        visited.append(node)
-        to_visit.extend(succ(node))
-    return visited
-
-def dfs_tree(root):
-    to_visit = [root]                 # a STACK: last in, first out
-    visited = []
-    while to_visit:
-        node = to_visit.pop()
-        visited.append(node)
-        to_visit.extend(succ(node))
-    return visited
-
-bfs_order, dfs_order = bfs_tree(root), dfs_tree(root)
-print("BFS visits (value, depth):", bfs_order)
-print("DFS visits (value, depth):", dfs_order)
-```
-
-    BFS visits (value, depth): [(1, 1), (2, 2), (3, 2), (3, 3), (4, 3), (4, 3), (5, 3), (4, 4), (5, 4), (5, 4), (5, 4), (5, 5)]
-    DFS visits (value, depth): [(1, 1), (3, 2), (5, 3), (4, 3), (5, 4), (2, 2), (4, 3), (5, 4), (3, 3), (5, 4), (4, 4), (5, 5)]
-
-
-The **only** difference between the two functions is `popleft()` (queue) versus `pop()` (stack). It's easier
-to see on the tree itself. The number in each node's corner is the order it was visited:
-
-
-```python
-def build_tree(node, path=()):
-    '''Return a nested dict {'node': (value, depth), 'id': path, 'children': [...]}.'''
-    return {"node": node, "id": path,
-            "children": [build_tree(c, path + (i,)) for i, c in enumerate(succ(node))]}
-
-def layout(tree, x=0.0, positions=None):
-    '''Assign x positions so leaves are evenly spaced; returns (positions, next_free_x).'''
-    positions = {} if positions is None else positions
-    if not tree["children"]:
-        positions[tree["id"]] = (x, -tree["node"][1]); return positions, x + 1
-    xs = []
-    for ch in tree["children"]:
-        positions, x = layout(ch, x, positions); xs.append(positions[ch["id"]][0])
-    positions[tree["id"]] = (sum(xs) / len(xs), -tree["node"][1])
-    return positions, x
-
-def visit_rank(tree, order_fn):
-    '''Map each tree-node id to its visit number under BFS/DFS (same traversal, on ids).'''
-    ranks, frontier = {}, deque([tree]) if order_fn == "bfs" else [tree]
-    while frontier:
-        t = frontier.popleft() if order_fn == "bfs" else frontier.pop()
-        ranks[t["id"]] = len(ranks) + 1
-        frontier.extend(t["children"])
-    return ranks
-
-def draw_tree(tree, ranks, ax, title):
-    pos, _ = layout(tree)
-    def edges(t):
-        for ch in t["children"]:
-            (x0, y0), (x1, y1) = pos[t["id"]], pos[ch["id"]]
-            ax.plot([x0, x1], [y0, y1], color="grey", lw=1, zorder=1); edges(ch)
-    edges(tree)
-    def nodes(t):
-        x, y = pos[t["id"]]; v = t["node"][0]
-        ax.scatter(x, y, s=520, color="tab:green" if v == 5 else "tab:blue", zorder=2)
-        ax.text(x, y, str(v), ha="center", va="center", color="white", fontweight="bold", zorder=3)
-        ax.text(x + 0.22, y + 0.22, str(ranks[t["id"]]), fontsize=8, color="tab:red", zorder=3)
-        for ch in t["children"]: nodes(ch)
-    nodes(tree)
-    ax.set_title(title); ax.axis("off")
-
-tree = build_tree(root)
-fig, axes = plt.subplots(1, 2, figsize=(12, 4.2))
-draw_tree(tree, visit_rank(tree, "bfs"), axes[0], "BFS: level by level")
-draw_tree(tree, visit_rank(tree, "dfs"), axes[1], "DFS: dive deep first")
-plt.suptitle("Same tree, different visiting order (red = visit number, green = goal value 5)", y=1.02)
-plt.tight_layout(); plt.show()
-```
-
-
-    
-![png](17_search_and_games_files/17_search_and_games_16_0.png)
-    
-
-
-- **BFS** visits level by level, so the **first goal it reaches is the shallowest one**. Here that's 5 at
-  depth 3 (`1 → 3 → 5`). For problems where every step costs the same, BFS finds a shortest path.
-- **DFS** dives straight down one branch first. It uses little memory but doesn't guarantee the shortest
-  path. In a huge tree like chess it can get lost down one very deep branch.
-
-**Trees vs graphs.** If two different paths can reach the *same* state (and in Tic-Tac-Toe they can), you
-should keep a **visited set** and skip states you've already seen. Otherwise you do the same work again and
-again. Section 8 shows exactly how much that costs.
-
----
-## 5. The state space of Tic-Tac-Toe
-
-Two players take turns on a 3×3 board. `X` moves first. Three in a row, column, or diagonal wins. Like the
-book, we store the board as a **9-character string**, cells indexed like this:
-
-```
- 0 | 1 | 2
----+---+---
- 3 | 4 | 5
----+---+---
- 6 | 7 | 8
-```
-
-Our AI plays `X` and moves first. The opponent plays `O`.
 
 
 ```python
@@ -469,122 +134,6 @@ def draw_board(board, ax, title="", values=None):
             ax.text(x + 0.33, y - 0.33, str(i), fontsize=8, color="lightgrey")
     ax.set_title(title, fontsize=11)
 
-example = "X...O...X"        # the book's example: X at 0, O at 4, X at 8
-print_board(example)
-print("winner:", repr(winner(example)), "| game over:", is_over(example))
-print("O's possible next boards:", all_moves(example, OPP))
-```
-
-     X | . | .
-     . | O | .
-     . | . | X
-    
-    winner: '.' | game over: False
-    O's possible next boards: ['XO..O...X', 'X.O.O...X', 'X..OO...X', 'X...OO..X', 'X...O.O.X', 'X...O..OX']
-
-
-### How big is the game? (textbook Exercise 2)
-
-A rough upper bound: the first player has 9 choices, the second 8, then 7, … so at most
-$9! = 362{,}880$ move sequences. Many games end early with a win, so the true number is smaller. We don't
-have to estimate it, though. A short recursive search can **count every possible game exactly**:
-
-
-```python
-def count_games(board=EMPTY * 9, turn=AI):
-    '''Exhaustively play out every legal game; return a Counter of outcomes.'''
-    w = winner(board)
-    if w != EMPTY:
-        return Counter({w: 1})
-    if EMPTY not in board:
-        return Counter({"draw": 1})
-    total = Counter()
-    for nxt in all_moves(board, turn):
-        total += count_games(nxt, other(turn))
-    return total
-
-t0 = time.time()
-outcomes = count_games()
-print(f"9! upper bound:       {math.factorial(9):,}")
-print(f"Actual distinct games: {sum(outcomes.values()):,}   ({time.time() - t0:.1f}s)")
-print(f"  X (first player) wins: {outcomes['X']:,}")
-print(f"  O (second player) wins: {outcomes['O']:,}")
-print(f"  draws:                  {outcomes['draw']:,}")
-```
-
-    9! upper bound:       362,880
-    Actual distinct games: 255,168   (0.6s)
-      X (first player) wins: 131,184
-      O (second player) wins: 77,904
-      draws:                  46,080
-
-
-That's **255,168** possible games for a game children solve at the kitchen table. Our numbers match the
-research figures the book quotes (131,184 / 77,904 / 46,080). Here is how fast the tree grows, move by move:
-
-
-```python
-def states_per_depth():
-    level, sizes = [EMPTY * 9], [1]
-    for step in range(9):
-        sign = AI if step % 2 == 0 else OPP
-        level = [n for b in level for n in all_moves(b, sign)]
-        sizes.append(len(level))
-        level = [b for b in level if winner(b) == EMPTY]   # finished games stop growing
-    return sizes
-
-sizes = states_per_depth()
-plt.bar(range(10), sizes, color="tab:blue")
-plt.yscale("log")
-for d, s in enumerate(sizes):
-    plt.text(d, s * 1.15, f"{s:,}", ha="center", fontsize=8)
-plt.xlabel("number of moves made"); plt.ylabel("boards at this depth (log scale)")
-plt.title("Combinatorial explosion: Tic-Tac-Toe's game tree, level by level")
-plt.show()
-```
-
-
-    
-![png](17_search_and_games_files/17_search_and_games_23_0.png)
-    
-
-
-Note the **log scale**: each bar is roughly 5–8× the one before it, until wins start ending games. Chess
-starts with 20 legal moves instead of 9, and games last about 40 moves per side, not 4–5. No computer can list
-every chess game. **This explosion is why the rest of the module exists.** Every technique that follows is a
-way to avoid looking at most of this tree.
-
-> **⚠️ Textbook check: why the book says 266,073.** The book's Activity 1 reports 266,073 games, which is
-> *more* than the true 255,168. That's impossible, and its own note quotes the correct figure. The cause is
-> its `filter_wins` function, which calls `list.remove()` **while looping over the same list**. Removing an
-> item shifts the rest of the list left, so the loop skips whatever comes next. If that next board was also
-> a finished game, it never gets filtered out, and its "children" get counted too. A three-line demo:
-
-
-```python
-numbers = [1, 2, 2, 3]
-for n in numbers:
-    if n == 2:
-        numbers.remove(n)      # mutating the list we're iterating over...
-print(numbers)                 # ...leaves a 2 behind: the second 2 was skipped
-
-numbers = [1, 2, 2, 3]
-numbers = [n for n in numbers if n != 2]   # the safe way: build a new list
-print(numbers)
-```
-
-    [1, 2, 3]
-    [1, 3]
-
-
-### A random player (textbook Exercise 3)
-
-The simplest possible agent picks any empty cell at random. Below, two random players face each other 10,000
-times. The book's version asks for the human's move with `input()`. To play yourself, set `INTERACTIVE = True`
-in Setup and run the `play_vs` cell at the end of Section 9.
-
-
-```python
 def random_policy(board, sign):
     return rng.choice(all_moves(board, sign))
 
@@ -603,19 +152,14 @@ def tournament(policy_x, policy_o, n=1000):
         results["X wins" if w == AI else "O wins" if w == OPP else "draw"] += 1
     return {k: results[k] for k in ("X wins", "O wins", "draw")}
 
-rand_vs_rand = tournament(random_policy, random_policy, n=10_000)
-print("random X vs random O, 10,000 games:", rand_vs_rand)
+print("Tic-Tac-Toe helpers ready:", [f.__name__ for f in (winner, is_over, all_moves, draw_board, play_game, tournament)])
 ```
 
-    random X vs random O, 10,000 games: {'X wins': 5857, 'O wins': 2841, 'draw': 1302}
+    Tic-Tac-Toe helpers ready: ['winner', 'is_over', 'all_moves', 'draw_board', 'play_game', 'tournament']
 
-
-Even with no strategy at all, **moving first is a big advantage**: X wins far more often than O. But the
-random X still loses a lot of games, games where any child could have spotted the win or the block. Let's fix
-that.
 
 ---
-## 6. Teaching the agent with rules (textbook Exercise 4, Activities 2–3)
+## 1. Teaching the agent with rules (textbook Exercise 4, Activities 2–3)
 
 We'll improve the X player in three steps, adding one rule at a time. After each step we check it in two
 ways:
@@ -686,14 +230,14 @@ for name, mv in POLICIES.items():
           f"| X LOSES {ex['O']:>6,} | draws {ex['draw']:>6,} || vs random O: {tour}")
 ```
 
-    random         | games to consider: 255,168 | X wins 131,184 | X LOSES 77,904 | draws 46,080 || vs random O: {'X wins': 608, 'O wins': 280, 'draw': 112}
+    random         | games to consider: 255,168 | X wins 131,184 | X LOSES 77,904 | draws 46,080 || vs random O: {'X wins': 558, 'O wins': 300, 'draw': 142}
 
 
-    win            | games to consider:  91,360 | X wins  40,352 | X LOSES 27,008 | draws 24,000 || vs random O: {'X wins': 830, 'O wins': 105, 'draw': 65}
+    win            | games to consider:  91,360 | X wins  40,352 | X LOSES 27,008 | draws 24,000 || vs random O: {'X wins': 812, 'O wins': 119, 'draw': 69}
 
 
-    win+block      | games to consider:  45,824 | X wins  25,344 | X LOSES  3,776 | draws 16,704 || vs random O: {'X wins': 893, 'O wins': 18, 'draw': 89}
-    fixed opening  | games to consider:     188 | X wins     140 | X LOSES      0 | draws     48 || vs random O: {'X wins': 961, 'O wins': 0, 'draw': 39}
+    win+block      | games to consider:  45,824 | X wins  25,344 | X LOSES  3,776 | draws 16,704 || vs random O: {'X wins': 913, 'O wins': 10, 'draw': 77}
+    fixed opening  | games to consider:     188 | X wins     140 | X LOSES      0 | draws     48 || vs random O: {'X wins': 967, 'O wins': 0, 'draw': 33}
 
 
 
@@ -715,7 +259,7 @@ plt.tight_layout(); plt.show()
 
 
     
-![png](17_search_and_games_files/17_search_and_games_31_0.png)
+![png](18_search_and_games_files/18_search_and_games_8_0.png)
     
 
 
@@ -731,7 +275,7 @@ Read the table from top to bottom:
   can't lose.
 
 > **Textbook check.** The book's counts for these activities (91,344, then 42,048, then 188) don't match ours
-> exactly. They were produced by the same buggy `filter_wins` from Section 5. The conclusions still hold:
+> exactly. They were produced by the same buggy `filter_wins` shown in the Principles of AI module. The conclusions still hold:
 > each rule shrinks the tree, `win+block` can still lose, and the fixed opening can't.
 
 The book sums up the tricks we used to shrink the state space. Each one comes back later in this module:
@@ -747,7 +291,7 @@ Hand-written rules worked here, but someone had to *find* them. That was easy fo
 for chess. The next step is to let the program **score** positions and **search** for good moves itself.
 
 ---
-## 7. Heuristics: educated guesses that guide search
+## 2. Heuristics: educated guesses that guide search
 
 BFS and DFS are **uninformed** searches. They treat every branch the same and know nothing about the problem.
 An **informed** search uses a **heuristic**, a function that makes an *educated guess* about how good a state
@@ -810,7 +354,7 @@ plt.tight_layout(); plt.show()
 
 
     
-![png](17_search_and_games_files/17_search_and_games_34_0.png)
+![png](18_search_and_games_files/18_search_and_games_11_0.png)
     
 
 
@@ -821,7 +365,7 @@ plt.tight_layout(); plt.show()
   prefers to win.
 
 Now let's make it a player: always choose a cell with the highest utility. We run the same exhaustive check
-as Section 6 twice, once with the heuristic playing **X** (moving first) and once playing **O** (moving
+as Section 1 twice, once with the heuristic playing **X** (moving first) and once playing **O** (moving
 second), each time against an opponent that may try *every* possible move.
 
 
@@ -855,7 +399,7 @@ Two very different results:
 
 - **Moving first, the heuristic never loses.** It picks up "take the centre", "block", and "win when you
   can" from its scores, with no hard-coded opening. (The book reports 12 losses here. That number comes from
-  the same counting bug as Section 5.)
+  the same counting bug shown in the Principles of AI module.)
 - **Moving second, it can lose**, in 120 different ways. Here is one of those games:
 
 
@@ -882,7 +426,7 @@ plt.tight_layout(); plt.show()
 
 
     
-![png](17_search_and_games_files/17_search_and_games_38_0.png)
+![png](18_search_and_games_files/18_search_and_games_15_0.png)
     
 
 
@@ -890,19 +434,19 @@ At move 4, O's heuristic scores the corner as best. It builds O's own lines and 
 *judged by the board as it is now*. But it lets X reply with a move that makes **two threats at once** (a
 **fork**). O can only block one, and X wins. Heuristic 2 looks just **one move ahead**: it scores cells by
 what's on the board now, never by what the opponent can do *next*. Seeing a fork coming needs **search**,
-which is exactly what Minimax adds in Section 9.
+which is exactly what Minimax adds in Section 4.
 
 ### Admissible, optimal, complete
 
 Three properties people check on a heuristic:
 
 - **Admissible**: it **never overestimates** the true cost to the goal. (It may underestimate.)
-  This is the property A\* needs to guarantee a shortest path (Section 8).
+  This is the property A\* needs to guarantee a shortest path (Section 3).
 - **Optimal**: the search it guides always finds the *best* solution.
 - **Complete**: the search always finds *a* solution if one exists.
 
 Our Tic-Tac-Toe heuristic is not optimal: as O it picks moves that lose, while a perfect player would never
-lose (Section 9). For pathfinding,
+lose (Section 4). For pathfinding,
 though, there are simple heuristics that **are** admissible: **straight-line (Euclidean) distance** and
 **Manhattan distance** (horizontal + vertical steps). Which one is admissible depends on **how you're allowed
 to move**:
@@ -937,7 +481,7 @@ heuristic **overestimates**, and A\* can return a path that isn't the shortest. 
 admissible with respect to a particular set of moves.*
 
 ---
-## 8. Pathfinding: BFS, greedy search, and A* (textbook Exercises 6–7)
+## 3. Pathfinding: BFS, greedy search, and A* (textbook Exercises 6–7)
 
 The book's maze: 7 rows × 9 columns, start at **(5, 3)**, goal at **(6, 9)**. Coordinates are
 **(row, column), counted from 1**. You can move up, down, left or right, and each step costs 1.
@@ -982,7 +526,7 @@ plt.show()
 
 
     
-![png](17_search_and_games_files/17_search_and_games_43_0.png)
+![png](18_search_and_games_files/18_search_and_games_20_0.png)
     
 
 
@@ -1064,7 +608,7 @@ plt.tight_layout(); plt.show()
 
 
     
-![png](17_search_and_games_files/17_search_and_games_46_0.png)
+![png](18_search_and_games_files/18_search_and_games_23_0.png)
     
 
 
@@ -1124,7 +668,7 @@ plt.tight_layout(); plt.show()
 
 
     
-![png](17_search_and_games_files/17_search_and_games_48_0.png)
+![png](18_search_and_games_files/18_search_and_games_25_0.png)
     
 
 
@@ -1135,10 +679,10 @@ it, as in the textbook maze, and the saving shrinks.
 
 > **Libraries.** The book also solves this maze with the `simpleai` library's `SearchProblem` + `astar`
 > classes. It still works (`pip install simpleai`), but writing the algorithm yourself teaches more, and the
-> code above does the same job. Section 13 has the details.
+> code above does the same job. Section 8 has the details.
 
 ---
-## 9. Two-player games: the Minimax algorithm
+## 4. Two-player games: the Minimax algorithm
 
 Pathfinding has a single agent. In a game, **an opponent moves between your turns**, trying to make things
 as bad for you as possible. We can't just pick the branch with the best outcome, because the opponent decides
@@ -1227,7 +771,7 @@ plt.show()
 
 
     
-![png](17_search_and_games_files/17_search_and_games_51_1.png)
+![png](18_search_and_games_files/18_search_and_games_28_1.png)
     
 
 
@@ -1276,7 +820,7 @@ print(f"Positions searched: {mm_nodes:,} in {mm_time:.2f}s")
 The value of the empty board is **0**: Tic-Tac-Toe is a **draw** if both sides play perfectly. Searching
 every line from the start takes about half a million positions.
 
-But most of that work is repeated. Remember Section 6's trick #3, *merging permutations*: different move
+But most of that work is repeated. Remember Section 1's trick #3, *merging permutations*: different move
 orders reach the same board. If we **cache** each board's value the first time we compute it (a
 *transposition table*), we never search the same position twice:
 
@@ -1320,8 +864,8 @@ print("random X vs Minimax O (200 games):", tournament(random_policy, minimax_po
 print("Minimax X vs Minimax O (20 games): ", tournament(minimax_policy, minimax_policy, n=20))
 ```
 
-    Minimax X vs random O (200 games): {'X wins': 193, 'O wins': 0, 'draw': 7}
-    random X vs Minimax O (200 games): {'X wins': 0, 'O wins': 158, 'draw': 42}
+    Minimax X vs random O (200 games): {'X wins': 191, 'O wins': 0, 'draw': 9}
+    random X vs Minimax O (200 games): {'X wins': 0, 'O wins': 163, 'draw': 37}
     Minimax X vs Minimax O (20 games):  {'X wins': 0, 'O wins': 0, 'draw': 20}
 
 
@@ -1357,7 +901,7 @@ else:
 
 
 ---
-## 10. Alpha-beta pruning: same answer, a fraction of the work
+## 5. Alpha-beta pruning: same answer, a fraction of the work
 
 Look back at the toy tree. Once the left branch is worth **8** to us, consider the middle MIN node. As soon as
 its first child comes back worth **6**, we know the MIN node is worth *at most* 6, because MIN will never pick
@@ -1408,7 +952,7 @@ plt.show()
 
 
     
-![png](17_search_and_games_files/17_search_and_games_61_1.png)
+![png](18_search_and_games_files/18_search_and_games_38_1.png)
     
 
 
@@ -1494,7 +1038,7 @@ print(f"Book's 'utility = 0' version: {minimax_book_init(lost, AI)}  (wrongly sa
 
 
 ---
-## 11. Negamax: one branch instead of two
+## 6. Negamax: one branch instead of two
 
 The MAX and MIN branches in `alphabeta` mirror each other. The book cites the **DRY** principle
 (*Don't Repeat Yourself*): code written twice is twice as likely to contain a bug. In a **zero-sum** game, a
@@ -1541,7 +1085,7 @@ point of view.
 > **symmetric** evaluation (if a position is worth +20 to one player, it's worth −20 to the other).
 
 ---
-## 12. Connect Four: when you can't search to the end (textbook Activity 4)
+## 7. Connect Four: when you can't search to the end (textbook Activity 4)
 
 Connect Four: **7 columns × 6 rows**. (The book says "seven cells high"; the standard board, and the book's
 own solution code, use 6.) You drop a token into a column, it falls to the lowest empty cell, and four in a
@@ -1667,18 +1211,18 @@ print(f"({time.time() - t0:.0f}s)")
     AI depth 4 vs AI depth 2, 6 games:      {'P1 wins': 4, 'P2 wins': 2, 'draws': 0}
 
 
-    AI depth 2 vs AI depth 4, 6 games:      {'P1 wins': 1, 'P2 wins': 5, 'draws': 0}
-    (37s)
+    AI depth 2 vs AI depth 4, 6 games:      {'P1 wins': 2, 'P2 wins': 3, 'draws': 1}
+    (32s)
 
 
 Two results stand out:
 
 - The depth-4 AI **beats a random player in every game**, whichever side it plays.
-- **Deeper search wins.** Depth 4 wins most games against depth 2, from either side. Same heuristic, same
-  code. Looking further ahead is the only difference. (Depth 2 still takes a few games. A depth-limited
-  search can be fooled by a threat just beyond its horizon, so it isn't perfect play like the full
-  Tic-Tac-Toe search.) That's why alpha-beta's savings matter so much: the time you save is time you
-  can spend searching deeper.
+- **Deeper search usually wins.** Across these 12 games, depth 4 wins more often than depth 2. Same
+  heuristic, same code: looking further ahead is the only difference. The margin is smaller than you might
+  expect, though. Depth 2 still takes some games, because a depth-limited search can be fooled by a threat
+  just beyond its horizon, and 12 games is a small sample. That's why alpha-beta's savings matter so much:
+  the time you save is time you can spend searching deeper.
 
 One sample game, AI (X) vs random (O):
 
@@ -1690,11 +1234,11 @@ print({1: "X (AI) wins", 2: "O (random) wins", 0: "draw"}[result])
 ```
 
     . . . . . . .
-    . . . . . . .
-    . . . . X . .
-    . . . . X . .
-    . O . X X . .
-    O O . X X O O
+    . . . . O . .
+    . . . O X . .
+    . . . X X . .
+    . O X O X O .
+    . X X X O O .
     0 1 2 3 4 5 6
     X (AI) wins
 
@@ -1720,7 +1264,7 @@ else:
 
 
 ---
-## 13. Libraries, and textbook corrections
+## 8. Libraries, and textbook corrections
 
 ### The book's libraries today
 
@@ -1732,24 +1276,19 @@ else:
 Both libraries wrap the same algorithms this notebook builds by hand, and the hand-built versions are easier
 to read and debug.
 
-### Corrections to Chapters 1–2
+### Corrections to Chapter 2
 
 | Where | What the book says | Correction |
 |---|---|---|
-| Ch 1, NumPy | `np.mat(...)`, `A * A` for matrix product | `np.mat` was removed in NumPy 2.0. Use `np.array` and `A @ A`. |
-| Ch 1, BFS/DFS | First listing is introduced as "DFS" but is BFS; typo `visited_bodes` | Section 4. BFS uses a queue (`popleft`), DFS a stack (`pop`). |
-| Ch 1, Exercise 3 | Defines `all_moves_from_board_list` but calls `all_moves_from_board` | Name mismatch: the code raises `NameError`. |
-| Ch 1, Activity 1 | 266,073 possible games | **255,168**. `filter_wins` removes items from a list while iterating over it (Section 5). |
-| Ch 1, Turing test | Predicted to be passed "in the late 2020s" | Text-only Turing tests were already being passed by LLMs in 2025 (Section 1). |
-| Ch 2, Exercise 4 / Activities 2–3 | 91,344 / 42,048 / 188 games | Affected by the same counting bug. The verified figures are in Section 6. |
-| Ch 2, Exercise 5 | The heuristic player loses 12 games | As X (first player) it loses **0** of 248 games. It *does* lose as O: 120 ways, via forks (Section 7). |
-| Ch 2, Exercise 7 | BFS reaches the goal in 110 steps | Duplicates are queued because there's no shared visited set. With one, BFS expands 47 cells. |
-| Ch 2, A\* description | Children sorted "by distance from the goal" | That's greedy search. A\* sorts by $g + h$ (Section 8). |
-| Ch 2, A\* code | Filters entries out of a `heapq` list with a comprehension | Breaks the heap invariant. Push duplicates and skip closed nodes instead. |
-| Ch 2, Minimax | MAX branch starts with `utility = 0` | Must start at $-\infty$ (Section 10 demo). |
-| Ch 2, Alpha-beta | Initial `alpha = infinity`, `beta = -infinity` | Swapped. $\alpha = -\infty$, $\beta = +\infty$ (Section 10 demo). |
-| Ch 2, Negamax | No negation, no max, returns last child's score | Section 11. |
-| Ch 2, Activity 4 | Connect Four board "seven cells high" | 7 columns × 6 rows, as the book's own solution code uses. |
+| Exercise 4 / Activities 2–3 | 91,344 / 42,048 / 188 games | Produced by Chapter 1's list-mutation counting bug. The verified figures are in Section 1. |
+| Exercise 5 | The heuristic player loses 12 games | As X (first player) it loses **0** of 248 games. It *does* lose as O: 120 ways, via forks (Section 2). |
+| Exercise 7 | BFS reaches the goal in 110 steps | Duplicates are queued because there's no shared visited set. With one, BFS expands 47 cells (Section 3). |
+| A\* description | Children sorted "by distance from the goal" | That's greedy search. A\* sorts by $g + h$ (Section 3). |
+| A\* code | Filters entries out of a `heapq` list with a comprehension | Breaks the heap invariant. Push duplicates and skip closed nodes instead. |
+| Minimax | MAX branch starts with `utility = 0` | Must start at $-\infty$ (Section 5 demo). |
+| Alpha-beta | Initial `alpha = infinity`, `beta = -infinity` | Swapped. $\alpha = -\infty$, $\beta = +\infty$ (Section 5 demo). |
+| Negamax | No negation, no max, returns last child's score | Section 6. |
+| Activity 4 | Connect Four board "seven cells high" | 7 columns × 6 rows, as the book's own solution code uses. |
 
 ### What heuristic search looks like today
 
@@ -1760,87 +1299,73 @@ Search) with **neural networks** that learned the evaluation function. That comb
 module and learning from the rest of the course beat world champions at Go.
 
 ---
-## 14. Your turn
+## 9. Your turn
 
-Add cells below each exercise. Exercises 3 and 5 consolidate the main ideas.
+Add cells below each exercise. Exercises 2 and 4 consolidate the main ideas.
 
-**Exercise 1 — An agent with memory.**
-The reflex vacuum agent in Section 2 keeps moving after both rooms are clean. Write an agent that remembers
-which rooms it has seen clean (use a `set` defined outside the function, or a small class) and returns
-`"NoOp"` once both are clean. Update `run_vacuum_world` so `"NoOp"` costs nothing, and compare the scores.
+**Exercise 1 — A better opening rule?**
+Section 1's `fixed opening` takes the top-left corner first. Change it to take the **centre** first (and pick
+any sensible second move). Run `exhaustive` on your version. Is it still impossible to lose? How many games
+are left to consider?
 
-**Exercise 2 — Symmetry.**
-The book says the four corner openings are equivalent. Write `rotate(board)` (a 90° clockwise turn of the
-9-character string) and `mirror(board)` (a left-right flip). Section 9 showed that 5,478 distinct positions
-are reachable. Collect them all, map each to a *canonical* form (the alphabetically smallest of its 8
-rotations and reflections), and count the unique canonical forms. You should get 765. By what factor does
-symmetry shrink the space?
-
-**Exercise 3 — Break admissibility on purpose.**
+**Exercise 2 — Break admissibility on purpose.**
 Re-run A\* on the textbook maze with `h = lambda a, b: 3 * manhattan(a, b)`. Does it still return a 15-step
 path? How many cells does it expand? Explain the trade-off you see between speed and optimality, and why it
 happens.
 
-**Exercise 4 — Diagonal moves.**
+**Exercise 3 — Diagonal moves.**
 Extend `neighbours()` to allow the four diagonal steps (each costing 1). Which of `euclidean` and `manhattan`
 is still admissible? Run A\* with each and compare the path lengths against BFS, which is always optimal when
 every step costs the same.
 
-**Exercise 5 — A better Connect Four heuristic.**
+**Exercise 4 — A better Connect Four heuristic.**
 Change the weights in `c4_evaluate` (or add a new feature, such as rewarding threats in lower rows, which
 come into play sooner). Play your version against the original at depth 3 for 10 games with
 `random_opening=2`. Report the result, and explain why your change helps or doesn't.
 
-**Exercise 6 — Count the savings.**
-Add a `NODES` counter to `c4_negamax` and compare the number of positions searched at depth 4 with and without
+**Exercise 5 — Count the savings.**
+Add a node counter to `c4_negamax` and compare the number of positions searched at depth 4 with and without
 the centre-first move ordering (`sorted(moves, key=lambda c: abs(c - 3))` vs plain `moves`). Relate what you
-find to alpha-beta's best case from Section 10.
+find to alpha-beta's best case from Section 5.
 
 ---
-## 15. If you remember nothing else
+## 10. If you remember nothing else
 
-1. **AI ⊃ ML.** Machine learning is one route to artificial intelligence. Rules and search are others, and
-   they need no training data at all. Every agent in this module was intelligent without learning anything.
+1. **Rules** shrink a search space: win if you can, block if you must, use known-good openings, exploit
+   symmetry and forced moves. Checking an agent against **every** possible opponent reply turns "it seems to
+   play well" into a proof that it can't lose.
 
-2. An **intelligent agent** senses its environment, acts on it, and pursues a goal. Formally, it is a
-   function from percepts to actions, judged by a performance measure.
-
-3. To make an agent plan, describe the problem as a **state space** (initial state, successor function, goal
-   test) and **search** it. **BFS** (a queue) finds the shallowest goal. **DFS** (a stack) dives deep and uses
-   less memory. Keep a **visited set** whenever states can repeat.
-
-4. State spaces **explode combinatorially**. Even Tic-Tac-Toe has 255,168 games. Every technique in this
-   module (rules, symmetry, heuristics, pruning) is a way to avoid looking at most of them.
-
-5. A **heuristic** is an educated guess about how good a state is or how far it is from the goal. It is
+2. A **heuristic** is an educated guess about how good a state is or how far it is from the goal. A heuristic
+   that only looks one move ahead can't see a **fork** coming. That takes search. A heuristic is
    **admissible** if it never overestimates the remaining cost, and that depends on which moves are allowed.
 
-6. **A\*** expands nodes in order of $f = g + h$ (cost so far plus estimated cost left). With an admissible
+3. **A\*** expands nodes in order of $f = g + h$ (cost so far plus estimated cost left). With an admissible
    $h$ it always finds the shortest path, usually after examining far fewer states than BFS. **Greedy** search
    ($f = h$ only) is faster but can return longer paths.
 
-7. **Minimax** handles opponents: MAX takes the highest child value, MIN the lowest, and values flow up from
+4. **Minimax** handles opponents: MAX takes the highest child value, MIN the lowest, and values flow up from
    the leaves. On Tic-Tac-Toe it plays perfectly, and the game is a draw with best play on both sides.
+   **Caching** repeated positions (a transposition table) cuts 549,946 visits down to 5,478 positions.
 
-8. **Alpha-beta pruning** returns *exactly* the minimax answer while skipping branches that can't change the
+5. **Alpha-beta pruning** returns *exactly* the minimax answer while skipping branches that can't change the
    decision. It searched about 26× fewer Tic-Tac-Toe positions. **Negamax** is the same algorithm in one
    branch, using $\min(a,b) = -\max(-a,-b)$.
 
-9. When the game is too big to search to the end (Connect Four, chess), **cut the search at a fixed depth and
+6. When the game is too big to search to the end (Connect Four, chess), **cut the search at a fixed depth and
    score the leaves with a heuristic**. Deeper search beats shallower search, which is why pruning matters.
 
-10. Read textbooks critically and **verify numbers by running code**. Several of this chapter's figures and
-    pseudocode were wrong, and only running them showed it.
+7. **Verify by running code.** This chapter's pseudocode had swapped alpha-beta bounds, a broken Negamax, and
+   A\* described as greedy search. Running each version is how you find out.
 
 ---
-## 16. Further reading and glossary
+## 11. Further reading and glossary
 
 ### Further reading
 
-- Zsolt Nagy (2018), *Artificial Intelligence and Machine Learning Fundamentals*, Packt. Chapters 1–2, the
-  Week 3 reading (with the corrections in Section 13).
+- Zsolt Nagy (2018), *Artificial Intelligence and Machine Learning Fundamentals*, Packt. Chapter 2, the
+  Week 3 reading (with the corrections in Section 8).
 - Stuart Russell & Peter Norvig, [*Artificial Intelligence: A Modern Approach*](https://aima.cs.berkeley.edu/)
-  (4th ed.). Chapters 2–6 are the standard reference for agents, search, heuristics and adversarial search.
+  (4th ed.). Chapters 3–6 cover informed search, heuristics and adversarial search.
 - Amit Patel, [*Introduction to A\**](https://www.redblobgames.com/pathfinding/a-star/introduction.html).
   Interactive, visual explanations of BFS, Dijkstra, greedy best-first and A\*. Highly recommended.
 - Hart, Nilsson & Raphael (1968), [*A Formal Basis for the Heuristic Determination of Minimum Cost Paths*](
@@ -1849,26 +1374,19 @@ find to alpha-beta's best case from Section 10.
   Why alpha-beta works and how much it saves.
 - Silver et al. (2016), [*Mastering the game of Go with deep neural networks and tree search*](
   https://doi.org/10.1038/nature16961). AlphaGo: search and learning combined.
-- Google for Developers, [*Introduction to Machine Learning Problem Framing*](
-  https://developers.google.com/machine-learning/problem-framing). The Week 3 assignment course.
 
 ### Glossary
 
 | Term | Meaning |
 |---|---|
-| Artificial intelligence | Building systems that behave intelligently, by any method: rules, search or learning. |
-| Machine learning | Improving at a task $T$, measured by $P$, through experience $E$ (Mitchell). |
-| Intelligent agent | An autonomous system that senses (sensors), acts (actuators) and pursues a goal. |
-| State space | Every state a problem can be in, connected by the actions between them. |
-| Successor function | Given a state, returns the states reachable in one action. |
-| Search tree | The tree of states reached by repeatedly applying the successor function from the start. |
-| BFS / DFS | Uninformed searches that visit level by level (queue) or branch by branch (stack). |
-| Combinatorial explosion | The rapid, multiplicative growth of the number of states as depth increases. |
 | Heuristic | An educated-guess function scoring a state's utility or estimated distance to the goal. |
+| Informed / uninformed search | Search that does / doesn't use a heuristic to decide what to explore next. |
 | Admissible heuristic | One that never overestimates the true remaining cost. |
+| Fork | A move that creates two threats at once, so the opponent can only block one. |
 | Greedy best-first search | Expands the node with the smallest $h$. Fast, but not guaranteed optimal. |
 | A\* | Expands the node with the smallest $g + h$. Optimal when $h$ is admissible. |
 | Minimax | Game-tree search where MAX takes the highest child value and MIN the lowest. |
+| Transposition table | A cache of already-evaluated positions, so each is searched only once. |
 | Alpha-beta pruning | Minimax that skips branches which can't affect the decision. Same answer, less work. |
 | Negamax | Minimax written as one branch, using $\min(a,b) = -\max(-a,-b)$ for zero-sum games. |
 | Static evaluation | Scoring a non-terminal position with a heuristic when the search stops. |
